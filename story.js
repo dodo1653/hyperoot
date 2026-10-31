@@ -15,6 +15,28 @@
 
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)]
 
+  // the first screen: pinned; scrolling opens the film's coin-shaped lens from a circle to the whole frame while the copy
+  // steps back and blurs, then the film fades into the story. Created before the story's trigger so the pins stack in order.
+  {
+    const film = $('#ifilm'), vid = film && $('video', film)
+    if (film) {
+      const it = gsap.timeline()
+      // radii in px both ends (the CSS start is in vmin / vh, which a tween can't convert)
+      const phone = () => matchMedia('(max-width: 760px)').matches
+      const r0 = () => (phone() ? innerHeight * 0.21 : Math.min(innerWidth, innerHeight) * 0.23) + 'px'
+      const r1 = () => Math.hypot(innerWidth, innerHeight) / 2 + 2 + 'px'
+      const vw0 = () => parseFloat(r0()) * 2.5 + 'px', vw1 = () => (phone() ? innerWidth * 1.55 : Math.max(innerWidth, innerHeight * 16 / 9)) + 'px'   // a phone keeps the whole frame (its letterbox is the lens's paper)
+      it.fromTo(film, { '--r': r0, '--vw': vw0, '--fe': '9%' }, { '--r': r1, '--vw': vw1, '--fe': () => (phone() ? '7%' : '0%'), '--ro': 0, ease: 'power2.inOut', duration: 1 }, 0)
+        .fromTo(film, { '--cx': () => (phone() ? '50%' : '72%'), '--cy': () => (phone() ? '74%' : '52%') }, { '--cx': '50%', '--cy': '50%', ease: 'power2.inOut', duration: 1 }, 0)
+        .to('.icopy', { y: -60, opacity: 0, filter: 'blur(12px)', ease: 'power2.in', duration: 0.55 }, 0)
+        .to('.ibar nav, .iscroll', { opacity: 0, duration: 0.3 }, 0)
+        .to({}, { duration: 0.35 })                        // the film holds full screen for a beat, then scrolls away under the story
+      ScrollTrigger.create({ trigger: '#intro', start: 'top top', end: () => '+=' + innerHeight * 1.4, pin: true, scrub: 0.6, animation: it, anticipatePin: 1, invalidateOnRefresh: true })
+      // only spend decode time while the film can be seen
+      if (vid) ScrollTrigger.create({ trigger: '#intro', start: 'top bottom', end: () => 'bottom+=' + innerHeight * 1.4 + ' top', onToggle: (st) => (st.isActive ? vid.play().catch(() => {}) : vid.pause()) })
+    }
+  }
+
   // split a heading into words of characters (keeps <em>), so letters can rise and unblur one by one
   function split(el) {
     const out = []

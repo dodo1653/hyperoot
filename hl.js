@@ -86,7 +86,7 @@
     const o = e.target.closest('[data-open]'); if (o) { e.preventDefault(); open(o.dataset.open); return }
     if (e.target.closest('[data-close]')) { close(); return }
     const c = e.target.closest('[data-coin]'); if (c) { e.preventDefault(); coinSheet(c.dataset.coin); return }
-    const g = e.target.closest('[data-go]'); if (g) { e.preventDefault(); const t = g.dataset.go === 'story' ? $('story') : $('app'); window.lenis ? window.lenis.scrollTo(t, { duration: 1.2 }) : t.scrollIntoView({ behavior: 'smooth' }) }
+    const g = e.target.closest('[data-go]'); if (g) { e.preventDefault(); const t = $(g.dataset.go) || $('app'); window.lenis ? window.lenis.scrollTo(t, { duration: 1.2 }) : t.scrollIntoView({ behavior: 'smooth' }) }
   })
   function coinSheet(mint) {
     const c = coins.find((x) => x.mint === mint) || { mint, name: 'Coin', symbol: '' }
@@ -196,4 +196,8 @@
     $('installBtn').onclick = async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice.catch(() => null); box.hidden = true }
     $('installX').onclick = () => { box.hidden = true; try { localStorage.setItem('pad-install', 'no') } catch {} }
   })()
+  // the film's sound: muted until asked (browsers only autoplay muted video)
+  { const v = $('film'), b = $('snd'); if (v && b) b.addEventListener('click', () => { v.muted = !v.muted; if (!v.muted) { v.volume = 0.8; v.play().catch(() => {}) } b.classList.toggle('on', !v.muted); b.setAttribute('aria-label', v.muted ? 'Sound on' : 'Sound off') }) }
+  // phone: show the app's tab bar once the app is reached
+  { const app = $('app'); if (app && 'IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => document.documentElement.classList.toggle('in-app', e.isIntersecting)), { threshold: 0.25 }).observe(app) }
 })()

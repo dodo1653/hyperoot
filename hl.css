@@ -242,3 +242,42 @@ html.static-story .scene { position: relative; inset: auto; min-height: 70vh; vi
   .docs { grid-template-columns: 1fr; } .toc { display: flex; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 8px; } .toc a { white-space: nowrap; }
   .docs article { padding: 4px 16px 40px; } .docs h3 { font-size: 26px; }
 }
+
+/* ------------------------------------------------------------ the first screen: the film inside a coin-shaped lens.
+   Scrolling (pinned, scrubbed in story.js) opens the lens from a circle to the full frame while the copy steps back. */
+.intro { position: relative; height: 100vh; height: 100svh; }
+.intro-pin { position: relative; height: 100vh; height: 100svh; overflow: hidden; background:
+  radial-gradient(120% 80% at 50% 120%, color-mix(in srgb, var(--mint) 26%, transparent), transparent 60%), var(--bg); }
+.ibar { position: absolute; z-index: 5; top: 0; left: 0; right: 0; display: flex; align-items: center; gap: 18px; padding: 18px 28px; }
+.ilogo { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; margin-right: auto; } .ilogo b { font: 600 16px var(--ui); letter-spacing: -.01em; }
+.ibar nav { display: flex; gap: 4px; } .ibar nav button { border: 0; background: none; padding: 8px 12px; border-radius: 9px; font: 500 13.5px var(--ui); color: var(--t2); cursor: pointer; } .ibar nav button:hover { color: var(--ink); background: var(--bg2); }
+.icopy { position: absolute; z-index: 3; left: clamp(20px, 6vw, 96px); top: 50%; transform: translateY(-50%); width: min(560px, 44vw); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font: 500 12.5px var(--mono); color: var(--t2); } .eyebrow i { width: 4px; height: 4px; border-radius: 50%; background: var(--t3); }
+.icopy h1 { margin: 18px 0 18px; font: 400 clamp(52px, 6.6vw, 108px)/.95 var(--display); letter-spacing: -.025em; } .icopy h1 em { font-style: italic; color: var(--mint-ink, #0b9e82); }
+.icopy p { margin: 0; max-width: 470px; font: 400 16px/1.6 var(--ui); color: var(--t2); }
+.icta { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; } .btn.big { height: 46px; padding: 0 22px; font-size: 14.5px; border-radius: 12px; }
+.ifilm { position: absolute; z-index: 2; inset: 0; margin: 0; pointer-events: none; }
+/* the lens is the film's own paper colour, so the letterbox round the 16:9 frame disappears inside the circle; the frame is
+   sized to the circle (its text fits the coin) and grows to cover the screen as the circle opens */
+.ifilm .lens { position: absolute; inset: 0; clip-path: circle(var(--r, 23vmin) at var(--cx, 72%) var(--cy, 52%)); background: #fbfbf9; }
+.ifilm video { position: absolute; left: var(--cx, 72%); top: var(--cy, 52%); width: var(--vw, calc(23vmin * 2.5)); aspect-ratio: 16 / 9; translate: -50% -50%; display: block; object-fit: cover;
+  -webkit-mask-image: linear-gradient(transparent, #000 var(--fe, 9%), #000 calc(100% - var(--fe, 9%)), transparent); mask-image: linear-gradient(transparent, #000 var(--fe, 9%), #000 calc(100% - var(--fe, 9%)), transparent); }
+.ifilm .ring { position: absolute; left: var(--cx, 72%); top: var(--cy, 52%); width: calc(var(--r, 23vmin) * 2 + 22px); height: calc(var(--r, 23vmin) * 2 + 22px); translate: -50% -50%; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--mint) 70%, transparent); box-shadow: 0 0 0 10px color-mix(in srgb, var(--mint) 10%, transparent), 0 30px 80px -20px rgba(11,28,25,.35); opacity: var(--ro, 1); }
+.ifilm .ring::after { content: ''; position: absolute; inset: -12px; border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--mint) 55%, transparent); animation: ringspin 40s linear infinite; }
+@keyframes ringspin { to { rotate: 360deg } }
+.ifilm .snd { pointer-events: auto; position: absolute; z-index: 4; left: min(calc(var(--cx, 72%) + var(--r, 23vmin) * .62), calc(100% - 64px)); top: min(calc(var(--cy, 52%) + var(--r, 23vmin) * .62), calc(100% - 64px)); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line2); background: var(--panel); display: grid; place-items: center; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ifilm .snd svg { width: 18px; height: 18px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; } .ifilm .snd .wave { display: none; } .ifilm .snd.on .wave { display: block; } .ifilm .snd.on .mute { display: none; }
+.ifilm figcaption { position: absolute; left: var(--cx, 72%); top: calc(var(--cy, 52%) + var(--r, 23vmin) + 30px); translate: -50% 0; font: 500 12px var(--mono); color: var(--t3); opacity: var(--ro, 1); white-space: nowrap; } .ifilm figcaption span { color: var(--t2); margin-left: 6px; }
+.iscroll { position: absolute; z-index: 3; left: 50%; bottom: 22px; translate: -50% 0; display: grid; justify-items: center; gap: 6px; font: 500 11px var(--mono); color: var(--t3); }
+.iscroll span { width: 1px; height: 34px; background: linear-gradient(var(--t3), transparent); animation: drip 2.2s ease-in-out infinite; transform-origin: top; } @keyframes drip { 0% { scale: 1 0 } 50% { scale: 1 1 } 100% { scale: 1 1; opacity: 0 } }
+@media (max-width: 760px) {
+  .ibar { padding: 14px 16px; } .ibar nav { display: none; } .ilogo b { font-size: 15px; }
+  .icopy { left: 16px; right: 16px; width: auto; top: 96px; transform: none; } .icopy h1 { font-size: clamp(44px, 12vw, 64px); margin: 12px 0; } .icopy p { font-size: 14.5px; }
+  .ifilm { --cx: 50%; --cy: 74%; --r: 21vh; } .iscroll { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .ifilm .ring::after, .iscroll span { animation: none; } }
+[data-theme="dark"] .icopy h1 em { color: var(--mint); }
+
+/* phone: the app's tab bar waits until the app itself is on screen (the first screen and the story come first) */
+@media (max-width: 820px) { .tabs { transition: transform .35s cubic-bezier(.2, .8, .2, 1); } html:not(.in-app) .tabs { transform: translateY(110%); } html:not(.in-app) .install { display: none; } }

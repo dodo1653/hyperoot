@@ -28,6 +28,76 @@
 <div class="grain" aria-hidden="true"></div>
 
 <!-- ================================================================ THE APP: one screen, no scrolling -->
+<section class="intro" id="intro" aria-label="[[BRAND]]">
+  <div class="intro-pin">
+    <header class="ibar">
+      <a class="ilogo" href="#intro"><span class="bm">[[MARK]]</span><b>[[BRAND]]</b></a>
+      <nav><button type="button" data-go="story">How it works</button><button type="button" data-open="docs">Docs</button><button type="button" data-go="app">Open the app</button></nav>
+      <button type="button" class="btn accent" data-open="launch">Launch a coin</button>
+    </header>
+    <div class="icopy">
+      <small class="eyebrow">A pump.fun launchpad <i></i> every CA ends in <b class="sfx">[[SUFFIX]]</b></small>
+      <h1>Every coin is rooted in <em>$[[TICKER]]</em>.</h1>
+      <p>Launch on pump.fun, paired with $[[TICKER]]. [[CREATOR]] % of every creator fee goes to you, automatically; [[BURN]] % burns $[[TICKER]]. About 0.0073 SOL, no platform fee, no dev buy.</p>
+      <div class="icta"><button type="button" class="btn accent big" data-open="launch">Launch a coin</button><button type="button" class="btn ghost big" data-go="app">Open the app</button></div>
+    </div>
+    <figure class="ifilm" id="ifilm">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="lens"><video id="film" src="assets/film/hyperroot.mp4" poster="assets/film/poster.jpg" autoplay muted loop playsinline preload="metadata"></video></div>
+      <button type="button" class="snd" id="snd" aria-label="Sound on"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="mute" d="m16 9 5 6m0-6-5 6"/></svg></button>
+      <figcaption>The launch film <span>35 s</span></figcaption>
+    </figure>
+    <div class="iscroll" aria-hidden="true"><span></span>scroll</div>
+  </div>
+</section>
+
+<section class="story" id="story" aria-label="How it works">
+  <div class="stage" id="stage">
+    <div class="scene s1" data-s="1">
+      <div class="cap"><span class="eb">01 / Paired</span><h2 class="split">Every coin is rooted in <em>$[[TICKER]]</em>.</h2><p>Coins launched here trade against $[[TICKER]], and $[[TICKER]] trades against [[QUOTE]]. Buying any of them first buys $[[TICKER]].</p></div>
+      <svg class="roots" viewBox="0 0 600 640" aria-hidden="true">
+        <g class="rl">
+          <path d="M300 92 C300 170 300 200 300 262"/><path d="M300 330 C300 410 300 440 300 500"/>
+          <path d="M300 120 C250 170 190 190 120 230"/><path d="M300 120 C350 170 410 190 480 230"/>
+          <path d="M300 360 C240 400 200 440 150 520"/><path d="M300 360 C360 400 400 440 450 520"/>
+          <path d="M120 230 C90 260 70 300 60 340"/><path d="M480 230 C510 260 530 300 540 340"/>
+          <path d="M150 520 C130 560 120 590 110 620"/><path d="M450 520 C470 560 480 590 490 620"/>
+          <path d="M300 540 C300 580 300 600 300 630"/>
+        </g>
+      </svg>
+      <div class="node n1"><span class="ic"><img src="assets/platforms/pumpfun.png" alt=""></span><b>Your coin</b><small>on pump.fun</small></div>
+      <div class="node n2"><span class="ic"><span class="bm">[[MARK]]</span></span><b>$[[TICKER]]</b><small>the pair for every coin</small></div>
+      <div class="node n3"><span class="ic"><img src="assets/platforms/hyperliquid.png" alt=""></span><b>[[QUOTE]]</b><small>Hyperliquid's token</small></div>
+    </div>
+
+    <div class="scene s2" data-s="2">
+      <div class="cap"><span class="eb">02 / Fees</span><h2 class="split">A <em>[[CREATOR]] / [[BURN]]</em> split, on chain.</h2><p>You pick the creator fee (0.5 to 3 %), paid in $[[TICKER]]. pump.fun's own fee sharing, set in the launch transaction, sends [[CREATOR]] % to you automatically and [[BURN]] % to the buyback wallet, which burns $[[TICKER]].</p></div>
+      <div class="fee">
+        <div class="fbar"><span class="f90"><b>[[CREATOR]] %</b><small>to the creator</small></span><span class="f10"><b>[[BURN]] %</b><small>burns $[[TICKER]]</small></span></div>
+        <svg class="drip" viewBox="0 0 200 260" aria-hidden="true"><path d="M180 0 C180 80 120 120 100 170 C90 200 100 230 100 255"/></svg>
+        <div class="burn"><span class="fl"></span><b>[[BURN]] %</b><small>of every creator fee burns $[[TICKER]]</small></div>
+      </div>
+    </div>
+
+    <div class="scene s3" data-s="3">
+      <div class="cap"><span class="eb">03 / Address</span><h2 class="split">The CA ends in <em>[[SUFFIX]]</em>.</h2><p>Every address is ground ahead of time on our relay and signs its coin's create once. A copy can use the name, not the ending.</p></div>
+      <div class="caline"><span class="ex mono">example</span><span class="mono" id="caType"></span><span class="mono sfxbox" id="caSfx">[[SUFFIX]]</span><i class="caret"></i></div>
+    </div>
+
+    <div class="scene s4" data-s="4">
+      <div class="cap"><span class="eb">04 / Cost</span><h2 class="split">What a launch costs.</h2></div>
+      <div class="costcard">
+        <div class="part p1"><small>account rent</small><b>≈ 0.0073 SOL</b></div>
+        <div class="part p2"><small>platform fee</small><b>none</b></div>
+        <div class="part p3"><small>dev buy</small><b>none</b></div>
+        <div class="part p4"><small>approvals</small><b>one, in your wallet</b></div>
+        <button type="button" class="btn accent p5" data-open="launch">Launch a coin</button>
+      </div>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
 <div class="app" id="app">
   <aside class="rail" aria-label="Main">
     <a class="logo" href="#app" aria-label="[[BRAND]]"><span class="bm">[[MARK]]</span></a>
@@ -82,52 +152,7 @@
 </div>
 
 <!-- ================================================================ THE STORY: one pinned stage, scrolling scrubs the scenes -->
-<section class="story" id="story" aria-label="How it works">
-  <div class="stage" id="stage">
-    <div class="scene s1" data-s="1">
-      <div class="cap"><span class="eb">01 / Paired</span><h2 class="split">Every coin is rooted in <em>$[[TICKER]]</em>.</h2><p>Coins launched here trade against $[[TICKER]], and $[[TICKER]] trades against [[QUOTE]]. Buying any of them first buys $[[TICKER]].</p></div>
-      <svg class="roots" viewBox="0 0 600 640" aria-hidden="true">
-        <g class="rl">
-          <path d="M300 92 C300 170 300 200 300 262"/><path d="M300 330 C300 410 300 440 300 500"/>
-          <path d="M300 120 C250 170 190 190 120 230"/><path d="M300 120 C350 170 410 190 480 230"/>
-          <path d="M300 360 C240 400 200 440 150 520"/><path d="M300 360 C360 400 400 440 450 520"/>
-          <path d="M120 230 C90 260 70 300 60 340"/><path d="M480 230 C510 260 530 300 540 340"/>
-          <path d="M150 520 C130 560 120 590 110 620"/><path d="M450 520 C470 560 480 590 490 620"/>
-          <path d="M300 540 C300 580 300 600 300 630"/>
-        </g>
-      </svg>
-      <div class="node n1"><span class="ic"><img src="assets/platforms/pumpfun.png" alt=""></span><b>Your coin</b><small>on pump.fun</small></div>
-      <div class="node n2"><span class="ic"><span class="bm">[[MARK]]</span></span><b>$[[TICKER]]</b><small>the pair for every coin</small></div>
-      <div class="node n3"><span class="ic"><img src="assets/platforms/hyperliquid.png" alt=""></span><b>[[QUOTE]]</b><small>Hyperliquid's token</small></div>
-    </div>
 
-    <div class="scene s2" data-s="2">
-      <div class="cap"><span class="eb">02 / Fees</span><h2 class="split">A <em>[[CREATOR]] / [[BURN]]</em> split, on chain.</h2><p>You pick the creator fee (0.5 to 3 %), paid in $[[TICKER]]. pump.fun's own fee sharing, set in the launch transaction, sends [[CREATOR]] % to you automatically and [[BURN]] % to the buyback wallet, which burns $[[TICKER]].</p></div>
-      <div class="fee">
-        <div class="fbar"><span class="f90"><b>[[CREATOR]] %</b><small>to the creator</small></span><span class="f10"><b>[[BURN]] %</b><small>burns $[[TICKER]]</small></span></div>
-        <svg class="drip" viewBox="0 0 200 260" aria-hidden="true"><path d="M180 0 C180 80 120 120 100 170 C90 200 100 230 100 255"/></svg>
-        <div class="burn"><span class="fl"></span><b>[[BURN]] %</b><small>of every creator fee burns $[[TICKER]]</small></div>
-      </div>
-    </div>
-
-    <div class="scene s3" data-s="3">
-      <div class="cap"><span class="eb">03 / Address</span><h2 class="split">The CA ends in <em>[[SUFFIX]]</em>.</h2><p>Every address is ground ahead of time on our relay and signs its coin's create once. A copy can use the name, not the ending.</p></div>
-      <div class="caline"><span class="ex mono">example</span><span class="mono" id="caType"></span><span class="mono sfxbox" id="caSfx">[[SUFFIX]]</span><i class="caret"></i></div>
-    </div>
-
-    <div class="scene s4" data-s="4">
-      <div class="cap"><span class="eb">04 / Cost</span><h2 class="split">What a launch costs.</h2></div>
-      <div class="costcard">
-        <div class="part p1"><small>account rent</small><b>≈ 0.0073 SOL</b></div>
-        <div class="part p2"><small>platform fee</small><b>none</b></div>
-        <div class="part p3"><small>dev buy</small><b>none</b></div>
-        <div class="part p4"><small>approvals</small><b>one, in your wallet</b></div>
-        <button type="button" class="btn accent p5" data-open="launch">Launch a coin</button>
-      </div>
-    </div>
-    <div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  </div>
-</section>
 
 <footer><span>[[BRAND]]</span><span>Independent. Not affiliated with, sponsored or endorsed by pump.fun or Hyperliquid. Memecoins are extremely risky.</span></footer>
 
