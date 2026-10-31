@@ -1,0 +1,322 @@
+<!doctype html>
+<!-- HyperRoot launch film (35 s, 1080p), real 3D (three.js r165): the $ROOT coin, roots growing as glowing tubes,
+     depth of field and bloom; titles blur in word by word over the canvas. Frame-accurate: window.renderFrame(t).
+     0 roots + coin + title · 6.2 the chain coin -> $ROOT -> HYPE · 11 the 90/10 split · 16.4 the CA ends in root ·
+     21 the app (example data) on a slab, grazing dolly, the launch sheet lifts in · 26.7 rack focus to the cost tiles ·
+     30.65 end card. -->
+<html><head><meta charset="utf-8"><title>HyperRoot film</title>
+<style>
+  @font-face { font-family: 'Instrument Serif'; src: url(assets/InstrumentSerif-Regular.ttf); font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url(assets/InstrumentSerif-Italic.ttf); font-style: italic; }
+  @font-face { font-family: Geist; src: url(assets/Geist-500.woff2); font-weight: 100 900; }
+  @font-face { font-family: 'Geist Mono'; src: url(assets/GeistMono-500.woff2); font-weight: 100 900; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #060807; color: #fff; font-family: Geist, sans-serif; }
+  #gl { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .ov { position: absolute; pointer-events: none; }
+  .t { font: 600 74px/1.08 Geist; letter-spacing: -.025em; color: #fff; text-shadow: 0 2px 24px rgba(10, 60, 50, .35); }
+  .t .m { color: #97fce4; }
+  .w { display: inline-block; will-change: transform, opacity, filter; }
+  .kick { font: 500 20px 'Geist Mono'; letter-spacing: .14em; text-transform: uppercase; color: #7f8a86; margin-bottom: 22px; }
+  .lede { font: 500 28px/1.45 Geist; color: #c3ccc8; margin-top: 26px; text-shadow: 0 0 16px rgba(0,0,0,.9); }
+  #cabox { left: 50%; top: 520px; transform: translateX(-50%); padding: 30px 44px 28px; border-radius: 22px; border: 1px solid rgba(151,252,228,.22); background: rgba(8,12,11,.72); backdrop-filter: blur(6px); min-width: 1260px; }
+  #cabox small { font: 500 17px 'Geist Mono'; color: #7f8a86; letter-spacing: .12em; text-transform: uppercase; }
+  #ca { font: 500 50px 'Geist Mono'; margin-top: 12px; white-space: nowrap; color: #eef3f1; }
+  #ca .end { border-radius: 10px; padding: 0 6px; margin-left: 2px; }
+  #ca .cur { display: inline-block; width: 3px; height: 54px; background: #eef3f1; vertical-align: -10px; margin-left: 6px; }
+  .ex { right: 40px; bottom: 34px; font: 500 16px 'Geist Mono'; letter-spacing: .12em; text-transform: uppercase; color: #9aa39f; border: 1px solid #2a302e; border-radius: 8px; padding: 7px 11px; background: rgba(6,8,7,.6); }
+  #end h1 { font: 400 168px/1 'Instrument Serif'; letter-spacing: -.01em; color: #fff; text-align: center; }
+  #end .tk { text-shadow: 0 0 18px #000, 0 0 6px #000; margin-top: 18px; text-align: center; font: 600 30px 'Geist Mono'; letter-spacing: .16em; color: #97fce4; }
+  #fine { left: 0; right: 0; bottom: 48px; text-align: center; font: 500 23px Geist; color: #b4bbb8; text-shadow: 0 0 18px #000, 0 0 6px #000; }
+  #flash { inset: 0; background: radial-gradient(circle at 50% 50%, #d9fff4, #97fce4 40%, #0b2a24 100%); opacity: 0; }
+  #fade { inset: 0; background: #060807; opacity: 0; }
+  .bar { left: 0; right: 0; height: 0; background: #000; }
+  #grain { position: absolute; left: -64px; top: -64px; width: 2048px; height: 1208px; pointer-events: none; opacity: .055; mix-blend-mode: screen; }
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/" } }</script>
+</head><body>
+<script>window.READY = false; window.DURATION = 35</script>
+<canvas id="gl" width="1920" height="1080"></canvas>
+
+<div class="ov" id="sh4" style="inset:0;background:radial-gradient(ellipse 62% 46% at 50% 50%, rgba(3,6,5,.86), rgba(3,6,5,.5) 60%, rgba(3,6,5,0) 100%)"></div>
+<div class="ov" id="sh5" style="left:0;right:0;top:0;height:330px;background:linear-gradient(rgba(4,6,6,.88),rgba(4,6,6,.55) 55%,rgba(4,6,6,0))"></div>
+<div class="ov" id="sh7" style="left:0;right:0;bottom:0;height:560px;background:radial-gradient(ellipse 52% 70% at 50% 72%, rgba(3,6,5,.9), rgba(3,6,5,.55) 55%, rgba(3,6,5,0) 100%)"></div>
+<div class="ov t" id="t1" style="left:0;right:0;top:820px;text-align:center">Every coin is rooted in <span class="m">$ROOT</span>.</div>
+<div class="ov" id="c2" style="left:150px;top:320px;width:760px"><div class="kick">01 / the pair</div><div class="t" id="t2">Your coin trades against <span class="m">$ROOT</span>.</div><div class="lede" id="l2">$ROOT trades against HYPE. Buying any coin here first buys $ROOT.</div></div>
+<div class="ov" id="c3" style="left:150px;top:300px;width:720px"><div class="kick">02 / the fee</div><div class="t" id="t3">90 % to you, automatically. <span class="m">10 % burns $ROOT.</span></div><div class="lede" id="l3">The creator picks a fee from 0.5 to 3 %. pump.fun's own fee sharing splits it on chain, in the launch transaction.</div></div>
+<div class="ov t" id="t4" style="left:0;right:0;top:300px;text-align:center">Every CA ends in <span class="m">root</span>.</div>
+<div class="ov" id="cabox"><small>example address</small><div id="ca"></div></div>
+<div class="ov lede" id="l4" style="left:0;right:0;top:760px;text-align:center">Ground ahead of time. Each address signs one create. Anyone can copy a name; nobody can copy the ending.</div>
+<div class="ov t" id="t5" style="left:150px;top:96px">Launch from the app.</div>
+<div class="ov ex" id="ex5">example data</div>
+<div class="ov" id="c6" style="left:150px;top:390px;width:640px"><div class="kick">03 / the cost</div><div class="t" id="t6">What a launch costs.</div></div>
+<div class="ov" id="end" style="left:0;right:0;top:640px"><h1 id="t7">HyperRoot</h1><div class="tk" id="tk7">$ROOT · every coin rooted in it</div></div>
+<div class="ov" id="fine">Independent. Not affiliated with, sponsored or endorsed by pump.fun or Hyperliquid.</div>
+<div class="ov" id="flash"></div><div class="ov" id="fade"></div>
+<div class="ov bar" id="barT" style="top:0"></div><div class="ov bar" id="barB" style="bottom:0"></div>
+<canvas id="grain" width="1048" height="604"></canvas>
+
+<script type="module">
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
+
+// ---------------------------------------------------------------- helpers
+const $ = (id) => document.getElementById(id), V = (x, y, z) => new THREE.Vector3(x, y, z)
+const clamp = (x) => Math.max(0, Math.min(1, x)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, k) => a + (b - a) * k
+const eio = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2), eout = (x) => 1 - Math.pow(1 - x, 3)
+const eq5 = (x) => (x < .5 ? 16 * x ** 5 : 1 - Math.pow(-2 * x + 2, 5) / 2), expo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x))
+const eBack = (x) => { const c1 = 1.5, c3 = c1 + 1; return x <= 0 ? 0 : 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2) }
+function mulberry(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296 } }
+const show = (el, o) => { el.style.opacity = o; el.style.visibility = o > .002 ? 'visible' : 'hidden' }
+
+// words: rise, unblur, staggered (the opening-text treatment the user likes); exit = blur out + scale up
+function split(el) { const walk = (n) => { for (const c of [...n.childNodes]) { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) f.appendChild(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = p; f.appendChild(s) } }); c.replaceWith(f) } else walk(c) } }; walk(el) }
+function words(el, t, t0, t1, step = .16, dur = .5) {
+  const out = t1 == null ? 0 : seg(t, t1, t1 + .45)
+  el.querySelectorAll('.w').forEach((w, i) => { const p = eout(seg(t, t0 + i * step, t0 + i * step + dur)) * (1 - out)
+    w.style.opacity = p; w.style.transform = `translateY(${(1 - p) * 18 * (out ? 0 : 1)}px) scale(${1 + out * .15})`; w.style.filter = `blur(${out ? out * 10 : (1 - p) * 14}px)` })
+  el.style.visibility = t > t0 - .1 && (t1 == null || t < t1 + .5) ? 'visible' : 'hidden'
+}
+for (const id of ['t1', 't2', 'l2', 't3', 'l3', 't4', 'l4', 't5', 't6', 't7']) split($(id))
+function kick(id, t, t0, t1) { const k = $(id).querySelector('.kick'), p = eout(seg(t, t0, t0 + .5)) * (1 - seg(t, t1, t1 + .4)); show(k, p); k.style.filter = `blur(${(1 - p) * 8}px)`; $(id).style.visibility = t > t0 - .1 && t < t1 + .5 ? 'visible' : 'hidden' }
+await document.fonts.load('600 80px Geist'); await document.fonts.load('500 30px "Geist Mono"'); await document.fonts.load('80px "Instrument Serif"')
+const tex = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t }
+const load = (u) => new Promise((ok) => new THREE.TextureLoader().load(u, (t) => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; ok(t) }))
+
+// ---------------------------------------------------------------- renderer, scene, post
+const renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, preserveDrawingBuffer: true })
+renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false)
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#060807')
+const camera = new THREE.PerspectiveCamera(34, 1920 / 1080, 0.05, 400)
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-4, 6, 8); scene.add(key)
+const rim = new THREE.DirectionalLight(0x9ffff0, 1.2); rim.position.set(6, -2, -4); scene.add(rim)
+scene.add(new THREE.AmbientLight(0x2a3a36, .6))
+const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1920, 1080, { type: THREE.HalfFloatType, samples: 4 }))
+composer.addPass(new RenderPass(scene, camera))
+const bokeh = new BokehPass(scene, camera, { focus: 10, aperture: .001, maxblur: .01 }); composer.addPass(bokeh)
+const bloom = new UnrealBloomPass(new THREE.Vector2(1920, 1080), .38, .5, .78); composer.addPass(bloom)
+composer.addPass(new OutputPass())
+
+// ---------------------------------------------------------------- roots: tapered glowing tubes that grow
+const MINT = new THREE.Color('#5ef0cf')
+const rootMat = (k = 1) => new THREE.MeshStandardMaterial({ color: '#3fbf9f', emissive: MINT, emissiveIntensity: .42 * k, roughness: .4, metalness: .15 })
+function growPts(rand, start, dir, len, depth, out, opts) {
+  const pts = [start.clone()], step = .14, n = Math.round(len / step); let p = start.clone(), d = dir.clone()
+  for (let i = 0; i < n; i++) {
+    const j = V((rand() - .5) * .34, (rand() - .5) * .34, (rand() - .5) * (opts.flat ? .05 : .3)); d.add(j); if (opts.down) d.y -= .03; if (opts.flat) d.z *= .6; d.normalize()
+    p = p.clone().addScaledVector(d, step); pts.push(p)
+    if (depth < 3 && i > 3 && rand() < .07 + depth * .02) { const side = V(-d.y, d.x, 0).multiplyScalar(rand() < .5 ? -1 : 1); growPts(rand, p.clone(), d.clone().addScaledVector(side, .5 + rand() * .45).normalize(), len * (.4 + rand() * .25), depth + 1, out, opts) }
+    if (p.length() > (opts.max || 99)) break
+  }
+  out.push({ pts, depth, delay: Math.min(.6, out.length ? rand() * .2 + depth * .12 : 0) })
+}
+const _v = new THREE.Vector3()
+function tube(r, radius) {
+  const curve = new THREE.CatmullRomCurve3(r.pts), seg = Math.max(6, r.pts.length * 2), rad = 7
+  const g = new THREE.TubeGeometry(curve, seg, radius, rad, false), pos = g.attributes.position
+  for (let i = 0; i <= seg; i++) { const u = i / seg, c = curve.getPointAt(u), s = 1 - .82 * u; for (let k = 0; k <= rad; k++) { const ix = i * (rad + 1) + k; _v.fromBufferAttribute(pos, ix).sub(c).multiplyScalar(s).add(c); pos.setXYZ(ix, _v.x, _v.y, _v.z) } }
+  g.computeVertexNormals(); return g
+}
+function rootSystem(seed, count, len, opts = {}) {
+  const rand = mulberry(seed), list = [], group = new THREE.Group(), mats = [rootMat(1), rootMat(.75), rootMat(.55), rootMat(.45)]
+  for (let k = 0; k < count; k++) { const a = opts.angles ? opts.angles[k] : (k / count) * Math.PI * 2 + (rand() - .5) * .4, dir = opts.dirs ? opts.dirs[k] : V(Math.cos(a), Math.sin(a), 0)
+    growPts(rand, (opts.origin || V(0, 0, 0)).clone().addScaledVector(dir, opts.r0 || 0), dir, len * (.8 + rand() * .4), 0, list, opts) }
+  const tubes = list.map((r) => { const m = new THREE.Mesh(tube(r, (opts.w || .07) * Math.pow(.62, r.depth)), mats[Math.min(3, r.depth)]); group.add(m); return { m, n: m.geometry.index.count, delay: r.delay } })
+  return { group, grow(p) { for (const o of tubes) { const q = expo(clamp((p - o.delay) / (1 - o.delay + 1e-6))); o.m.geometry.setDrawRange(0, Math.floor(o.n * q / 6) * 6); o.m.visible = q > 0 } } }
+}
+
+// ---------------------------------------------------------------- world 1 (origin): the coin and its roots
+const gltf = await new GLTFLoader().loadAsync('assets/root_coin.glb')
+function coinFrom(src) { const inner = src.clone(true), box = new THREE.Box3().setFromObject(inner), size = box.getSize(V(0, 0, 0)), c = box.getCenter(V(0, 0, 0))
+  inner.position.sub(c); const thin = size.x < size.y && size.x < size.z ? 'x' : size.y < size.z ? 'y' : 'z'
+  const holder = new THREE.Group(); holder.add(inner); if (thin === 'y') holder.rotation.x = Math.PI / 2; if (thin === 'x') holder.rotation.y = -Math.PI / 2
+  const pivot = new THREE.Group(); pivot.add(holder); pivot.scale.setScalar(2.6 / Math.max(size.x, size.y, size.z)); pivot.userData.s = pivot.scale.x; return pivot }
+const coin = coinFrom(gltf.scene); scene.add(coin)
+const R1 = rootSystem(7, 11, 7.5, { r0: 1.2, w: .05, flat: true, max: 9 }); R1.group.position.z = -.3; scene.add(R1.group)
+const point = new THREE.Mesh(new THREE.SphereGeometry(.06, 24, 16), new THREE.MeshBasicMaterial({ color: '#c8fff1' })); scene.add(point)
+
+// ---------------------------------------------------------------- world 2 (x = 40): the chain
+const W2 = V(40, 0, 0)
+const logoDisc = async (url) => { const g = new THREE.Group(), t = await load(url)
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(.62, .62, .16, 64), [new THREE.MeshPhysicalMaterial({ color: '#141817', roughness: .25, metalness: .6, clearcoat: 1 }), new THREE.MeshStandardMaterial({ map: t, roughness: .4 }), new THREE.MeshStandardMaterial({ color: '#141817' })])
+  body.rotation.x = Math.PI / 2; g.add(body)
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(.66, .025, 12, 96), new THREE.MeshStandardMaterial({ color: '#3fbf9f', emissive: MINT, emissiveIntensity: .3 })); g.add(ring); return g }
+const nTop = await logoDisc('assets/pumpfun.png'); nTop.position.copy(W2).add(V(2.6, 3.0, 0)); scene.add(nTop)
+const nBot = await logoDisc('assets/hyperliquid.png'); nBot.position.copy(W2).add(V(2.6, -3.0, 0)); scene.add(nBot)
+const coin2 = coinFrom(gltf.scene); coin2.scale.multiplyScalar(.62); coin2.userData.s = coin2.scale.x; coin2.position.copy(W2).add(V(2.6, 0, 0)); scene.add(coin2)
+const spine = new THREE.CatmullRomCurve3([V(2.6, 2.3, 0), V(2.68, 1.4, .05), V(2.55, .9, 0), V(2.6, -.9, 0), V(2.66, -1.6, .05), V(2.6, -2.3, 0)].map((p) => p.add(W2)))
+const spineMesh = new THREE.Mesh(new THREE.TubeGeometry(spine, 120, .045, 8, false), rootMat(1)); scene.add(spineMesh)
+const R2 = rootSystem(21, 4, 2.6, { origin: V(2.6, 0, 0).add(W2), r0: .85, w: .035, angles: [-.3, .3, 1.05, 2.1], flat: true, max: 60 }); scene.add(R2.group)
+const pulse = new THREE.Mesh(new THREE.SphereGeometry(.12, 24, 16), new THREE.MeshBasicMaterial({ color: '#e8fff9' })); const pl = new THREE.PointLight(0x7ef2d6, 6, 3); pulse.add(pl); scene.add(pulse)
+
+// ---------------------------------------------------------------- world 3 (x = 80): the fee bar splits 90 / 10
+const W3 = V(80, 0, 0)
+const label = (w, h, big, small, dark) => tex(w, h, (c, W, H) => { c.fillStyle = dark ? '#121615' : '#97fce4'; c.fillRect(0, 0, W, H)
+  c.fillStyle = dark ? '#f2f5f3' : '#04241d'; c.font = `400 ${H * .42}px "Instrument Serif"`; c.fillText(big, W * .07, H * .58)
+  c.fillStyle = dark ? '#8c9693' : '#0b4a3c'; c.font = `500 ${H * .11}px "Geist Mono"`; c.fillText(small, W * .07, H * .84) })
+const slabMat = (t) => [new THREE.MeshStandardMaterial({ color: '#0f1312', roughness: .3, metalness: .4 }), new THREE.MeshStandardMaterial({ color: '#0f1312' }), new THREE.MeshStandardMaterial({ color: '#0f1312' }), new THREE.MeshStandardMaterial({ color: '#0f1312' }), new THREE.MeshStandardMaterial({ map: t, roughness: .45 }), new THREE.MeshStandardMaterial({ color: '#0f1312' })]
+const b90 = new THREE.Mesh(new THREE.BoxGeometry(5.0, 1.3, .26), slabMat(label(1150, 300, '90 %', 'TO THE CREATOR, AUTOMATICALLY', true))); b90.position.copy(W3).add(V(2.1, .6, 0)); scene.add(b90)
+const t10 = label(280, 300, '10 %', 'BURNS $ROOT', false)
+const b10 = new THREE.Mesh(new THREE.BoxGeometry(.6, 1.3, .26), [new THREE.MeshStandardMaterial({ color: '#7ef2d6', emissive: MINT, emissiveIntensity: .35 }), ...Array(3).fill(new THREE.MeshStandardMaterial({ color: '#7ef2d6', emissive: MINT, emissiveIntensity: .35 })), new THREE.MeshStandardMaterial({ map: t10, emissive: MINT, emissiveIntensity: .15, emissiveMap: t10 }), new THREE.MeshStandardMaterial({ color: '#7ef2d6' })])
+b10.position.copy(W3).add(V(4.95, .6, 0)); scene.add(b10)
+const drip = new THREE.CatmullRomCurve3([V(4.95, -.1, 0), V(5.05, -1.0, .2), V(4.55, -2.0, .1), V(4.7, -3.0, 0)].map((p) => p.add(W3)))
+const dripMesh = new THREE.Mesh(new THREE.TubeGeometry(drip, 80, .05, 8, false), rootMat(1.2)); scene.add(dripMesh)
+const ember = new THREE.Mesh(new THREE.SphereGeometry(.28, 32, 20), new THREE.MeshBasicMaterial({ color: '#e5fff8' })); ember.position.copy(W3).add(V(4.7, -3.15, 0)); const el = new THREE.PointLight(0x5ef0cf, 14, 6); ember.add(el); scene.add(ember)
+const sparksGeo = new THREE.BufferGeometry(), SPN = 160, sp = new Float32Array(SPN * 3), srand = mulberry(99), sparkSeed = []
+for (let i = 0; i < SPN; i++) sparkSeed.push([srand() * 2 - 1, srand(), srand() * 2 - 1, srand()])
+sparksGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3))
+const sparks = new THREE.Points(sparksGeo, new THREE.PointsMaterial({ color: '#b9fff0', size: .05, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); scene.add(sparks)
+
+// ---------------------------------------------------------------- world 4 (x = 80, y = -22): a deep root field behind the CA
+const W4 = V(80, -22, 0)
+// the crane: taproots from the burn down into the soil, out-of-focus roots passing the lens, soil dust for parallax
+const RD = rootSystem(33, 3, 15, { origin: V(84.7, -3.3, 0), r0: .1, w: .05, down: true, max: 400, dirs: [V(-.25, -1, -.1), V(.35, -1, -.15), V(-.6, -1, -.3)].map((d) => d.normalize()) }); scene.add(RD.group)
+const rdMats = []; RD.group.traverse((o) => { if (o.material && !rdMats.includes(o.material)) rdMats.push(o.material) }); rdMats.forEach((m) => { m.userData.e = m.emissiveIntensity; m.userData.c = m.color.clone() })
+const RN1 = rootSystem(53, 5, 4.5, { origin: V(77.6, -8.5, 7.6), r0: .2, w: .05, flat: true, max: 400 }); scene.add(RN1.group)
+const RN2 = rootSystem(59, 5, 4.5, { origin: V(86.2, -15.5, 8.0), r0: .2, w: .05, flat: true, max: 400 }); scene.add(RN2.group)
+const DUSTN = 700, dustPos = new Float32Array(DUSTN * 3); { const rd = mulberry(77); for (let i = 0; i < DUSTN; i++) { const w = i < 260
+  dustPos[i * 3] = w ? 44 + rd() * 36 : 72 + rd() * 20; dustPos[i * 3 + 1] = w ? -3.5 + rd() * 7 : -24 + rd() * 23; dustPos[i * 3 + 2] = w ? -5 + rd() * 11 : -7 + rd() * 16 } }
+const dustGeo = new THREE.BufferGeometry(); dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3))
+const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: '#7ef2d6', size: .05, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending })); scene.add(dust)
+const R4 = rootSystem(41, 12, 14, { origin: V(0, 0, -14).add(W4), r0: 1, w: .07, flat: true, max: 200 }); R4.group.traverse((o) => { if (o.material) { o.material = o.material.clone(); o.material.emissiveIntensity *= .3; o.material.color.multiplyScalar(.35) } }); scene.add(R4.group)
+
+// ---------------------------------------------------------------- world 5 (x = 160): the app on a slab, the launch sheet, the cost tiles
+const W5 = V(160, 0, 0)
+const appTex = await load('assets/ui_app.png'), sheetTex = await load('assets/ui_sheet.png'), sheet2Tex = await load('assets/ui_sheet2.png')
+const paper = (t) => [...Array(4).fill(new THREE.MeshStandardMaterial({ color: '#b9b4aa', roughness: .6 })), new THREE.MeshBasicMaterial({ map: t, color: new THREE.Color(.8, .8, .8) }), new THREE.MeshStandardMaterial({ color: '#8f8a80' })]
+const app = new THREE.Mesh(new THREE.BoxGeometry(16, 9, .22), paper(appTex)); app.position.copy(W5); scene.add(app)
+const sheet = new THREE.Mesh(new THREE.BoxGeometry(5.0, 4.52, .16), paper(sheetTex)); scene.add(sheet)
+const tiles = [['ACCOUNT RENT', '≈ 0.0073 SOL', true], ['PLATFORM FEE', 'none'], ['DEV BUY', 'none'], ['APPROVALS', 'one']].map(([s, b, hl], i) => {
+  const t = tex(880, 420, (c, W, H) => { c.fillStyle = '#101413'; c.fillRect(0, 0, W, H); c.strokeStyle = hl ? 'rgba(151,252,228,.55)' : '#2a302e'; c.lineWidth = 4; c.strokeRect(2, 2, W - 4, H - 4)
+    c.fillStyle = '#86908c'; c.font = '500 34px "Geist Mono"'; c.fillText(s, 52, 86); c.fillStyle = hl ? '#97fce4' : '#f2f5f3'; c.font = '400 150px "Instrument Serif"'; c.fillText(b, 48, 300) })
+  const m = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.15, .1), slabMat(t)); scene.add(m); return m })
+
+// ---------------------------------------------------------------- grain
+const gctx = $('grain').getContext('2d'), gi = gctx.createImageData(1048, 604), gr = mulberry(5)
+for (let i = 0; i < gi.data.length; i += 4) { const v = gr() * 255; gi.data[i] = gi.data[i + 1] = gi.data[i + 2] = v; gi.data[i + 3] = 255 } gctx.putImageData(gi, 0, 0)
+
+// ---------------------------------------------------------------- camera path + everything per frame
+const CA = '8kRvQ3fZpX2mT7yHcN4wLbE9uJ6dGsA1Hp5xKqWroot'
+const tgt = V(0, 0, 0), tmp = V(0, 0, 0)
+const appPt = (x, y, z) => app.localToWorld(V(x, y, z))
+window.renderFrame = (t) => {
+  let focus = 10, aperture = .0008, exposure = 1
+  $('grain').style.transform = `translate(${-((t * 997) % 64)}px, ${-((t * 613) % 64)}px)`
+  // ---- 1 (0 - 6.2)
+  if (t < 6.2) {
+    const k = seg(t, 0, 5.6), push = eio(seg(t, 5.55, 6.2))
+    camera.position.set(lerp(1.2, -.4, eio(k)), lerp(-.8, .2, eio(k)), lerp(15, 9.5, eio(k)) - push * 8.1)
+    tgt.set(0, 0, 0); camera.lookAt(tgt)
+    point.visible = t < 3.3; point.scale.setScalar(eout(seg(t, .3, .8)) * (1 - seg(t, 2.6, 3.2)) + .001)
+    R1.grow(seg(t, .7, 3.8)); R1.group.visible = true
+    const c = eout(seg(t, 2.5, 4.3)); coin.visible = c > 0; coin.rotation.set(.15 * (1 - c), (1 - c) * Math.PI * 2.5 + Math.sin(t * .6) * .12, 0)
+    coin.scale.setScalar(coin.userData.s * (.25 + .75 * c) + 1e-4)
+    focus = camera.position.distanceTo(tgt); aperture = lerp(.0012, .0004, c)
+    exposure = 1 + push * 1.4
+  } else { R1.group.visible = false; coin.visible = false; point.visible = false }
+  words($('t1'), t, 4.0, 5.45, .2)
+  show($('flash'), Math.max(0, 1 - Math.abs(t - 6.2) / .3) * .9)
+  // ---- 2 (6.2 - 11.1)
+  const in2 = t >= 6.2 && t < 11.15
+  for (const o of [nTop, nBot, coin2, spineMesh, R2.group, pulse]) o.visible = in2
+  if (in2) {
+    const k = seg(t, 6.2, 11.1), pull = eout(seg(t, 6.2, 7.4)), whip = eio(seg(t, 10.55, 11.15))
+    camera.position.set(40 + lerp(1.0, -.6, eio(k)) + whip * 38, lerp(.6, -.3, eio(k)), lerp(4, 13, pull))
+    tgt.set(40 + 1.0 + whip * 38, 0, 0); camera.lookAt(tgt)
+    R2.grow(seg(t, 6.6, 8.8)); spineMesh.geometry.setDrawRange(0, Math.floor(spineMesh.geometry.index.count * eio(seg(t, 6.5, 7.8)) / 6) * 6)
+    ;[nTop, coin2, nBot].forEach((o, i) => { const p = eBack(seg(t, 6.7 + i * .3, 7.5 + i * .3)); o.scale.setScalar((o.userData.s || 1) * (.001 + p)); o.rotation.y = (1 - p) * 1.4 + (o === coin2 ? Math.sin(t * .8) * .2 : 0) })
+    const pp = ((t - 8.4) % 1.7) / 1.4, on = t > 8.4 && t < 10.6; pulse.visible = on && pp < 1; pulse.position.copy(spine.getPointAt(eio(clamp(pp))))
+    focus = camera.position.distanceTo(V(42.6, 0, 0)); aperture = .0009 + whip * .004
+  }
+  kick('c2', t, 6.8, 10.4); kick('c3', t, 10.8, 15.6); kick('c6', t, 27.1, 30.15)
+  words($('t2'), t, 6.9, 10.4, .14); words($('l2'), t, 7.7, 10.5, .05, .45)
+  // ---- 3 (11.1 - 16.6): the bar fills, splits; the 10 % drops down the root into the burn; the camera cranes down
+  const in3 = t >= 10.6 && t < 17.4
+  for (const o of [b90, b10, dripMesh, ember, sparks]) o.visible = in3
+  if (t >= 11.15 && t < 16.9) {
+    const k = seg(t, 11.15, 15.9), crane = eio(seg(t, 15.7, 16.9))
+    camera.position.set(78.9 + lerp(.9, .1, eio(k)) + crane * 2.7, lerp(.4, -.6, eio(k)) - crane * 21, lerp(13, 11.8, eio(k)) + crane * 1.5)
+    tgt.set(78.9 + crane * 2.7, lerp(-.2, -.8, eio(k)) - crane * 21.5, 0); camera.lookAt(tgt)
+    focus = camera.position.distanceTo(V(82.5, .3, 0)); aperture = .0008 + crane * .003
+  }
+  if (in3) {
+    const fill = eio(seg(t, 10.7, 11.7)); b90.scale.x = .001 + fill; b90.position.x = 80 + 2.1 - (1 - fill) * 2.5
+    const s = eBack(seg(t, 12.7, 13.3)); b10.scale.set(.001 + s, .001 + s, .001 + s)
+    const drop = eio(seg(t, 13.9, 14.9)); b10.position.copy(drop > 0 ? drip.getPointAt(Math.min(1, drop)) : V(84.95, .6, 0)); if (drop > 0) b10.scale.setScalar(Math.max(.001, 1 - drop * .85)); b10.rotation.z = drop * 1.2
+    dripMesh.geometry.setDrawRange(0, Math.floor(dripMesh.geometry.index.count * eio(seg(t, 13.4, 14.2)) / 6) * 6)
+    const e = eout(seg(t, 14.8, 15.2)); ember.scale.setScalar(.001 + e * (1 + .12 * Math.sin(t * 11))); el.intensity = 14 * e
+    for (let i = 0; i < SPN; i++) { const [a, b, c, d] = sparkSeed[i], life = ((t - 14.9) * .7 + d) % 1, live = t > 14.9
+      sp[i * 3] = 84.7 + a * .5 * life; sp[i * 3 + 1] = -3.15 + life * (1.2 + b * 1.6); sp[i * 3 + 2] = c * .4 * life; if (!live) sp[i * 3 + 1] = -99 }
+    sparksGeo.attributes.position.needsUpdate = true; sparks.material.opacity = e * .9
+  }
+  words($('t3'), t, 10.85, 15.6, .12); words($('l3'), t, 11.7, 15.7, .045, .45)
+  // ---- 4 (16.6 - 21.0): in the root field, the CA types; "root" locks in
+  R4.group.visible = t >= 15.9 && t < 21.3
+  if (t >= 16.9 && t < 21.0) {
+    const k = seg(t, 16.9, 21.0); camera.position.set(80 + 1.6 + lerp(-.4, .4, k), -22 + .3, 8 - k * 1.2); tgt.set(81.6, -22, -9); camera.lookAt(tgt)
+    focus = 5; aperture = .009; exposure = .75
+  }
+  R4.grow(seg(t, 15.9, 18.2))
+  RD.group.visible = t >= 14.9 && t < 16.9; RD.grow(seg(t, 14.95, 16.4))
+  { const f = lerp(1, .3, eio(seg(t, 15.9, 16.8))); rdMats.forEach((m) => { m.emissiveIntensity = m.userData.e * f; m.color.copy(m.userData.c).multiplyScalar(lerp(1, .35, 1 - (f - .3) / .7)) }) }
+  RN1.group.visible = RN2.group.visible = t >= 15.3 && t < 16.9; RN1.grow(seg(t, 15.3, 16.0)); RN2.grow(seg(t, 15.7, 16.5))
+  { const a = seg(t, 10.45, 10.7) * (1 - seg(t, 11.3, 11.6)) + seg(t, 15.2, 15.6) * (1 - seg(t, 16.75, 16.9)); dust.visible = a > .002; dust.material.opacity = a * .55 }
+  words($('t4'), t, 17.0, 20.55, .16); words($('l4'), t, 19.3, 20.6, .04, .45)
+  { const on = t > 17.3 && t < 21.0, a = eout(seg(t, 17.3, 17.8)) * (1 - seg(t, 20.55, 21.0)); show($('cabox'), on ? a : 0)
+    $('cabox').style.filter = `blur(${seg(t, 20.55, 21.0) * 10}px)`
+    const n = Math.floor(CA.length * seg(t, 17.6, 19.2)), lock = eout(seg(t, 19.25, 19.7)), body = CA.slice(0, Math.min(n, CA.length - 4)), end = n > CA.length - 4 ? CA.slice(CA.length - 4, n) : ''
+    $('ca').innerHTML = body + (end ? `<span class="end" style="background:rgba(151,252,228,${lock});color:${lock > .5 ? '#04241d' : '#eef3f1'};box-shadow:0 0 ${44 * lock}px rgba(94,240,207,${.5 * lock})">${end}</span>` : '') + (t < 19.5 && Math.floor(t * 2.6) % 2 === 0 ? '<span class="cur"></span>' : '') }
+  show($('fade'), Math.max(Math.max(0, 1 - Math.abs(t - 21.0) / .35), seg(t, 34.3, 35)))
+  // ---- 5 (21.0 - 26.7): grazing dolly across the app slab, the sheet lifts in; then rack focus to the cost tiles (26.7 - 30.6)
+  const in5 = t >= 20.8
+  app.visible = sheet.visible = in5 && t < 30.7; for (const m of tiles) m.visible = t >= 26.2 && t < 30.7
+  if (in5 && t < 30.7) {
+    app.rotation.set(-.95 * (1 - eq5(seg(t, 24.6, 26.3))), .08 * (1 - eq5(seg(t, 24.6, 26.3))), .05 * (1 - eq5(seg(t, 24.6, 26.3)))); app.updateMatrixWorld()
+    const k1 = eio(seg(t, 21.0, 24.6)), k2 = eq5(seg(t, 24.6, 26.3))
+    const a0 = appPt(-7.2, -5.6, 3.6), a1 = appPt(3.5, -4.2, 2.2), b1 = appPt(0, -.2, 15.5)
+    const l0 = appPt(-3.5, -1.2, 0), l1 = appPt(4.5, 1.2, 0), lb = appPt(0, 0, 0)
+    camera.position.copy(a0.lerp(a1, k1).lerp(b1, k2)); tgt.copy(l0.lerp(l1, k1).lerp(lb, k2)); camera.lookAt(tgt)
+    focus = camera.position.distanceTo(tgt); aperture = lerp(.0018, .0004, k2); if (t < 26.2) { app.material[4].color.setRGB(.8, .8, .8); sheet.material[4].color.setRGB(.8, .8, .8) }
+    // the launch sheet: slides over the app's right side and lifts off it
+    const s = eout(seg(t, 25.4, 26.3)), lift = eBack(seg(t, 25.9, 26.5))
+    sheet.position.copy(appPt(5.2 + (1 - s) * 9, -1.6, .2 + lift * .9)); sheet.rotation.copy(app.rotation); sheet.material[4].map = t > 26.35 ? sheet2Tex : sheetTex
+    // 26.7 - 30.6: the tiles assemble in front; focus racks from the app to them
+    if (t >= 26.2) {
+      const rk = eio(seg(t, 26.6, 27.4)), cam = appPt(0, -.2, 15.5)
+      const pos = [[1.25, .68], [3.8, .68], [1.25, -.68], [3.8, -.68]], from = [[2, 6, 6, -.6], [8, 2, 4, .5], [-3, -6, 7, .7], [9, -5, 5, -.5]]
+      tiles.forEach((m, i) => { const p = eout(seg(t, 26.7 + i * .2, 27.7 + i * .2)), f = from[i]
+        m.position.copy(cam).add(V(lerp(f[0], pos[i][0], p), lerp(f[1], pos[i][1] + .2, p), -lerp(f[2], 10, p)))
+        m.rotation.set(f[3] * (1 - p), f[3] * .8 * (1 - p), f[3] * .4 * (1 - p)) })
+      focus = lerp(focus, 10, rk); aperture = lerp(aperture, .003, rk)
+      const dim = lerp(.8, .14, rk); app.material[4].color.setRGB(dim, dim, dim); sheet.material[4].color.setRGB(dim, dim, dim)
+    }
+  }
+  words($('t5'), t, 21.4, 24.9, .14); show($('ex5'), seg(t, 21.3, 21.8) * (1 - seg(t, 26.4, 26.8)))
+  words($('t6'), t, 27.2, 30.15, .14)
+  // ---- 6 -> 7: letterbox; 7 (30.65 - 35): the coin with its roots, the wordmark
+  { const c = eio(seg(t, 30.2, 30.65)) * (1 - eio(seg(t, 30.65, 31.2))); $('barT').style.height = $('barB').style.height = c * 540 + 'px' }
+  if (t >= 30.65) {
+    coin.visible = true; R1.group.visible = true; R1.grow(1); const k = seg(t, 30.65, 35); bloom.strength = .3
+    const c = eout(seg(t, 30.7, 31.8)); coin.scale.setScalar(coin.userData.s * (.4 + .6 * c)); coin.rotation.set(0, (1 - c) * 2.2 + Math.sin(t * .7) * .18, 0)
+    coin.position.set(0, 1.25, 0); R1.group.position.set(0, 1.25, -.3)
+    camera.position.set(lerp(-.5, .5, k), lerp(.2, .6, k) + 0, lerp(11.5, 10.5, k)); tgt.set(0, .2, 0); camera.lookAt(tgt)
+    focus = camera.position.distanceTo(V(0, 1.25, 0)); aperture = .0014
+  } else { coin.position.set(0, 0, 0); R1.group.position.set(0, 0, -.3) }
+  words($('t7'), t, 31.4, null, .2, .7); show($('tk7'), eout(seg(t, 32.1, 32.7))); show($('fine'), eout(seg(t, 32.5, 33.1)))
+  $('end').style.visibility = t > 31 ? 'visible' : 'hidden'
+  show($('sh4'), seg(t, 16.9, 17.6) * (1 - seg(t, 20.6, 21.1))); show($('sh5'), seg(t, 21.2, 21.8) * (1 - seg(t, 26.2, 26.8))); show($('sh7'), seg(t, 31.1, 32.0) * (1 - seg(t, 34.4, 35)))
+  renderer.toneMappingExposure = exposure
+  bokeh.uniforms.focus.value = focus; bokeh.uniforms.aperture.value = aperture
+  composer.render()
+}
+window.renderFrame(0); window.READY = true
+</script>
+</body></html>

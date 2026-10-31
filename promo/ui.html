@@ -1,0 +1,152 @@
+<!doctype html>
+<!-- The HyperRoot dashboard and launch sheet, drawn as images for the film's 3D slabs (example data).
+     ?part=app (2400x1350) | sheet | sheet2 (840x1350, after Launch). Captured with headless Edge, see README. -->
+<html><head><meta charset="utf-8"><style>
+  @font-face { font-family: 'Instrument Serif'; src: url(assets/InstrumentSerif-Regular.ttf); font-style: normal; }
+  @font-face { font-family: 'Instrument Serif'; src: url(assets/InstrumentSerif-Italic.ttf); font-style: italic; }
+  @font-face { font-family: Geist; src: url(assets/Geist-500.woff2); font-weight: 100 900; }
+  @font-face { font-family: 'Geist Mono'; src: url(assets/GeistMono-500.woff2); font-weight: 100 900; }
+  :root { --ink: #f2f1ec; --t2: #a3a19a; --t3: #6c6a64; --bg: #0a0b0b; --line: #232425; --mint: #97fce4; --acc: #5ef0cf;
+    --lbg: #f6f5f1; --lpanel: #fbfaf7; --link: #121212; --lt2: #5b5a55; --lt3: #94928b; --lline: #e3e0d8; --lacc: #0a8f73; --up: #12915f; --dn: #cf3d42; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: Geist, sans-serif; }
+  .sc { position: absolute; inset: 0; overflow: hidden; will-change: transform, opacity, clip-path; }
+  .serif { font-family: 'Instrument Serif', serif; font-weight: 400; letter-spacing: -.01em; }
+  .serif i { font-style: italic; color: var(--acc); }
+  .mono { font-family: 'Geist Mono', monospace; }
+  .w { display: inline-block; will-change: transform, opacity, filter; }
+  .kick { font: 500 20px 'Geist Mono'; letter-spacing: .14em; text-transform: uppercase; color: var(--t3); }
+  .lede { font-size: 30px; line-height: 1.45; color: var(--t2); max-width: 620px; }
+  #grain { position: absolute; inset: -64px; pointer-events: none; opacity: .05; mix-blend-mode: screen; z-index: 50; }
+  #frame { position: absolute; inset: 0; z-index: 49; pointer-events: none; }
+  .bar { position: absolute; left: 0; right: 0; height: 0; background: #000; z-index: 48; }
+
+  /* 1 roots */
+  #s1 svg { position: absolute; inset: 0; }
+  #s1 .art { position: absolute; left: 50%; top: 50%; width: 1500px; height: 1500px; margin: -750px 0 0 -750px; background: url(assets/ticker.jpg) center / cover; border-radius: 50%;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 70%); }
+  #s1 h1 { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 104px; line-height: 1; }
+
+  /* 2 chain */
+  #s2 .copy { position: absolute; left: 160px; top: 330px; width: 720px; }
+  #s2 h2 { font-size: 92px; line-height: .98; margin: 22px 0 28px; }
+  .node { position: absolute; width: 150px; text-align: center; transform: translate(-50%, -50%); }
+  .node .disc { width: 128px; height: 128px; margin: 0 auto; border-radius: 50%; border: 1px solid #2c2e2f; background: #111213; display: grid; place-items: center; overflow: hidden; box-shadow: 0 0 0 10px rgba(151,252,228,.02); }
+  .node .disc img { width: 64px; height: 64px; border-radius: 14px; }
+  .node .disc.seed { border-color: rgba(151,252,228,.5); box-shadow: 0 0 60px rgba(94,240,207,.35); }
+  .node .disc.seed img { width: 128px; height: 128px; border-radius: 0; transform: scale(1.35); }
+  .node b { display: block; margin-top: 16px; font: 600 26px Geist; } .node small { display: block; font: 500 17px 'Geist Mono'; color: var(--t3); margin-top: 4px; }
+  #s2 svg, #s3 svg { position: absolute; inset: 0; overflow: visible; }
+
+  /* 3 split */
+  #s3 .copy { position: absolute; left: 160px; top: 300px; width: 640px; }
+  #s3 h2 { font-size: 104px; line-height: .96; margin: 22px 0 28px; }
+  #feebar { position: absolute; left: 960px; top: 300px; width: 800px; height: 128px; border-radius: 20px; border: 1px solid #2c2e2f; background: #111213; overflow: hidden; }
+  #feebar .fill { position: absolute; left: 0; top: 0; bottom: 0; background: #1a1c1d; }
+  #feebar .ten { position: absolute; top: 0; bottom: 0; right: 0; width: 10%; background: var(--mint); color: #04241d; display: grid; place-content: center; text-align: center; font: 600 26px Geist; }
+  #feebar .ten small { font: 500 15px 'Geist Mono'; display: block; }
+  #feebar .ninety { position: absolute; left: 34px; top: 26px; font-size: 54px; } #feebar .ninety small { display: block; font: 500 17px 'Geist Mono'; color: var(--t3); margin-top: 2px; }
+  #feebar .split { position: absolute; top: 0; bottom: 0; left: 90%; width: 2px; background: var(--bg); }
+  .feelabel { position: absolute; left: 960px; top: 252px; font: 500 18px 'Geist Mono'; letter-spacing: .12em; text-transform: uppercase; color: var(--t3); }
+  #burn { position: absolute; left: 1652px; top: 846px; width: 220px; text-align: center; transform: translateX(-50%); }
+  #burn b { display: block; font-size: 120px; line-height: 1; } #burn small { font: 500 19px 'Geist Mono'; color: var(--t2); }
+  #ember { position: absolute; left: 1652px; top: 790px; width: 30px; height: 30px; margin: -15px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 40px 14px rgba(94,240,207,.5); }
+
+  /* 4 CA */
+  #s4 { text-align: center; }
+  #s4 h2 { position: absolute; left: 0; right: 0; top: 250px; font-size: 128px; }
+  #cabox { position: absolute; left: 50%; top: 520px; transform: translateX(-50%); padding: 34px 48px 30px; border-radius: 22px; border: 1px solid #2c2e2f; background: #0f1011; text-align: left; min-width: 1240px; }
+  #cabox small { font: 500 17px 'Geist Mono'; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; }
+  #ca { font: 500 50px 'Geist Mono'; letter-spacing: .01em; margin-top: 14px; white-space: nowrap; }
+  #ca .end { color: #04241d; background: var(--mint); border-radius: 10px; padding: 0 6px; margin-left: 2px; box-shadow: 0 0 40px rgba(94,240,207,.45); }
+  #ca .cur { display: inline-block; width: 3px; height: 54px; background: var(--ink); vertical-align: -10px; margin-left: 6px; }
+  #s4 .lede { position: absolute; left: 0; right: 0; top: 760px; margin: 0 auto; text-align: center; max-width: 900px; }
+
+  /* 5 the app (light) */
+  #s5 { background: #e9e6df; perspective: 2200px; }
+  #app { position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; margin: -450px 0 0 -800px; background: var(--lbg); color: var(--link); border-radius: 18px; border: 1px solid var(--lline);
+    box-shadow: 0 60px 140px rgba(30,25,15,.28), 0 10px 30px rgba(30,25,15,.12); transform-style: preserve-3d; overflow: hidden; }
+  #app .rail { position: absolute; left: 0; top: 0; bottom: 0; width: 72px; border-right: 1px solid var(--lline); display: grid; align-content: start; justify-items: center; gap: 22px; padding-top: 20px; }
+  #app .rail i { width: 34px; height: 34px; border-radius: 10px; background: #ebe8e1; } #app .rail i.logo { background: var(--mint); display: grid; place-items: center; font: italic 24px 'Instrument Serif'; color: #04241d; font-style: italic; }
+  #app .top { position: absolute; left: 72px; right: 0; top: 0; height: 70px; border-bottom: 1px solid var(--lline); display: flex; align-items: center; gap: 14px; padding: 0 22px; }
+  #app .top .brand { font: 600 20px Geist; margin-right: auto; } #app .top .brand small { display: block; font: 500 13px Geist; color: var(--lt2); }
+  .chip { border: 1px solid var(--lline); border-radius: 10px; padding: 8px 12px; font: 500 14px 'Geist Mono'; color: var(--lt2); background: var(--lpanel); }
+  .chip.mint { background: var(--mint); color: #04241d; border-color: transparent; font-family: Geist; font-weight: 600; }
+  #app .cnt { position: absolute; left: 94px; right: 22px; top: 88px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--lline); border-radius: 14px; background: var(--lpanel); }
+  #app .cnt div { padding: 16px 20px; border-left: 1px solid var(--lline); } #app .cnt div:first-child { border: 0; }
+  #app .cnt small { display: block; font: 500 13px Geist; color: var(--lt2); } #app .cnt b { display: block; font: 400 42px 'Instrument Serif'; margin-top: 4px; } #app .cnt em { font: 500 12px Geist; color: var(--lt3); font-style: normal; }
+  #app .panels { position: absolute; left: 94px; right: 22px; top: 222px; bottom: 22px; display: grid; grid-template-columns: 1.15fr 1.1fr .95fr; gap: 14px; }
+  .pn { border: 1px solid var(--lline); border-radius: 14px; background: var(--lpanel); overflow: hidden; }
+  .pn h4 { font: 600 16px Geist; padding: 14px 16px; border-bottom: 1px solid var(--lline); display: flex; justify-content: space-between; } .pn h4 small { font: 500 12px Geist; color: var(--lt3); }
+  .row { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-bottom: 1px solid #efece5; font: 500 15px Geist; }
+  .row .d { width: 8px; height: 8px; border-radius: 50%; } .row .r { margin-left: auto; font: 500 14px 'Geist Mono'; color: var(--lt2); text-align: right; }
+  .row .ic { width: 30px; height: 30px; border-radius: 8px; background: #e6e2d9; display: grid; place-items: center; font: 600 13px Geist; color: var(--lt2); }
+  .row .sfx { color: var(--lacc); font-family: 'Geist Mono'; }
+  .exlabel { position: absolute; right: 30px; top: 18px; z-index: 5; font: 500 15px 'Geist Mono'; letter-spacing: .1em; text-transform: uppercase; color: #6d6a62; background: rgba(255,255,255,.8); border: 1px solid #ddd8ce; border-radius: 8px; padding: 6px 10px; }
+  #sheet { position: absolute; top: 0; right: 0; bottom: 0; width: 560px; background: var(--lpanel); border-left: 1px solid var(--lline); box-shadow: -30px 0 80px rgba(30,25,15,.16); padding: 26px 30px; }
+  #sheet h3 { font: 400 46px 'Instrument Serif'; margin-bottom: 16px; }
+  .fld { margin-bottom: 14px; } .fld small { display: block; font: 500 13px Geist; color: var(--lt2); margin-bottom: 6px; }
+  .fld div { border: 1px solid var(--lline); border-radius: 10px; padding: 12px 14px; font: 500 17px Geist; background: #fff; }
+  .fees { display: flex; gap: 8px; } .fees span { flex: 1; text-align: center; border: 1px solid var(--lline); border-radius: 10px; padding: 11px 0; font: 600 16px Geist; background: #fff; } .fees span.on { background: var(--link); color: #fff; border-color: var(--link); }
+  .note { font: 500 14px Geist; color: var(--lt2); margin: 8px 0 18px; } .note b { color: var(--lacc); }
+  #go { border-radius: 12px; background: var(--mint); color: #04241d; font: 600 20px Geist; text-align: center; padding: 18px; }
+
+  /* 6 cost */
+  #s6 h2 { position: absolute; left: 160px; top: 380px; font-size: 128px; line-height: .95; width: 700px; }
+  .tile { position: absolute; width: 400px; height: 190px; border: 1px solid #2c2e2f; border-radius: 20px; background: #101112; padding: 28px 30px; }
+  .tile small { font: 500 17px 'Geist Mono'; letter-spacing: .1em; text-transform: uppercase; color: var(--t3); } .tile b { display: block; font: 400 66px 'Instrument Serif'; margin-top: 30px; }
+  .tile.hl { border-color: rgba(151,252,228,.5); } .tile.hl b { color: var(--mint); }
+
+  /* 7 end */
+  #s7 .seed { position: absolute; left: 50%; top: 330px; width: 330px; height: 330px; margin-left: -165px; }
+  #s7 .seed img { width: 100%; height: 100%; }
+  #s7 .glow { position: absolute; left: 50%; top: 495px; width: 900px; height: 900px; margin: -450px; border-radius: 50%; background: radial-gradient(circle, rgba(94,240,207,.16), transparent 60%); }
+  #s7 h1 { position: absolute; left: 0; right: 0; top: 650px; text-align: center; font-size: 150px; line-height: 1; }
+  #s7 .tk { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font: 600 30px 'Geist Mono'; color: var(--mint); letter-spacing: .14em; }
+  #s7 .fine { position: absolute; left: 0; right: 0; bottom: 46px; text-align: center; font: 500 22px Geist; color: #8e8c86; }
+
+html, body { width: auto; height: auto; background: transparent; }
+body.app #app { position: absolute; left: 0; top: 0; margin: 0; width: 1600px; height: 900px; transform: scale(1.5); transform-origin: 0 0; border-radius: 0; box-shadow: none; }
+body.sheet #sheetwrap { position: absolute; left: 0; top: 0; width: 560px; height: 900px; transform: scale(1.5); transform-origin: 0 0; }
+body.sheet #sheet { position: absolute; inset: 0; width: auto; box-shadow: none; border: 0; border-radius: 0; }
+.sc { position: static; } #grain { display: none; }
+#sheet, #app { color: var(--link); }
+.exlabel { top: auto !important; bottom: 14px; right: 24px !important; }
+</style></head><body>
+<div id="appwrap"><div id="app">
+    <div class="exlabel">example data</div>
+    <div class="rail"><i class="logo">r</i><i></i><i></i><i></i></div>
+    <div class="top"><div class="brand">HyperRoot<small>Every coin here trades against $ROOT</small></div><span class="chip">$ROOT · paired with HYPE</span><span class="chip">CA ends in <b style="color:var(--lacc)">root</b></span><span class="chip">Connect</span><span class="chip mint">Launch a coin</span></div>
+    <div class="cnt"><div><small>$ROOT burned</small><b>1.24M</b><em>10 % of every creator fee</em></div><div><small>24 h volume through $ROOT</small><b>$14.8K</b><em>buys and sells</em></div><div><small>Coins launched</small><b>6</b><em>each with its create tx</em></div><div><small>$ROOT market cap</small><b>$48.2K</b><em>on pump.fun</em></div></div>
+    <div class="panels">
+      <div class="pn" id="feed"><h4>Live trades<small>polling every 5 s</small></h4></div>
+      <div class="pn" id="top"><h4>Top on HyperRoot<small>by 24 h volume</small></h4></div>
+      <div class="pn" id="newest"><h4>Newest<small>CA ends in root</small></h4></div>
+    </div>
+    </div></div>
+<div id="sheetwrap"><div id="sheet"><h3>Launch a coin</h3>
+      <div class="fld"><small>Name</small><div id="fname"></div></div>
+      <div class="fld"><small>Ticker</small><div id="fsym"></div></div>
+      <div class="fld"><small>Creator fee</small><div class="fees"><span>0.5 %</span><span class="on">1 %</span><span>2 %</span><span>3 %</span></div></div>
+      <p class="note"><b>90 %</b> yours · <b>10 %</b> burns $ROOT · CA ends in <b>root</b> · ≈0.0073 SOL · no dev buy</p>
+      <div id="go">Launch</div>
+    </div>
+  </div>
+<script>
+const $ = (id) => document.getElementById(id)
+const part = new URLSearchParams(location.search).get('part') || 'app'
+document.body.className = part === 'app' ? 'app' : 'sheet'
+if (part === 'app') $('sheetwrap').remove(); else $('appwrap').remove()
+if (part === 'app') {
+// the app's example rows
+const FEED = [['bought', '120.0K', 'ECAT', '$4.00', '5s'], ['sold', '211.2K', 'MFROG', '$7.70', '48s'], ['bought', '302.5K', 'LDOG', '$11', '1m'], ['bought', '393.7K', 'ORB', '$15', '2m'], ['sold', '484.9K', 'HALF', '$19', '3m'], ['bought', '576.2K', 'ECAT', '$23', '3m'], ['bought', '667.4K', 'MFROG', '$26', '4m'], ['sold', '758.6K', 'LDOG', '$30', '5m'], ['bought', '849.9K', 'ORB', '$34', '6m'], ['bought', '941.1K', 'HALF', '$37', '6m'], ['bought', '1.03M', 'ECAT', '$41', '7m'], ['sold', '1.12M', 'MFROG', '$45', '8m']]
+$('feed').insertAdjacentHTML('beforeend', FEED.map((f) => `<div class="row"><span class="d" style="background:${f[0] === 'bought' ? 'var(--up)' : 'var(--dn)'}"></span>8Xk2…a1F ${f[0]} <span style="color:${f[0] === 'bought' ? 'var(--up)' : 'var(--dn)'}">${f[1]} $ROOT</span> of <b>$${f[2]}</b><span class="r">${f[3]}<br>${f[4]}</span></div>`).join(''))
+const TOP = [['E', 'Root Cat', 'ECAT', '$9.3K', '$41.2K'], ['M', 'Mint Frog', 'MFROG', '$4.1K', '$18.9K'], ['L', 'Liquid Dog', 'LDOG', '$1.2K', '$7.3K'], ['O', 'Orbit', 'ORB', '$800', '$5.1K'], ['H', 'Halftone', 'HALF', '$300', '$3.9K']]
+$('top').insertAdjacentHTML('beforeend', TOP.map((c, i) => `<div class="row"><span style="width:18px;color:var(--lt3)">${i + 1}</span><span class="ic">${c[0]}</span><span>${c[1]}<br><small style="color:var(--lt3)">$${c[2]}</small></span><span class="r">${c[3]} vol<br>${c[4]} mc</span></div>`).join(''))
+const NEW = [['R', 'Root Cat', 'ECAT', 'A6R…', '30m'], ['M', 'Mint Frog', 'MFROG', 'A11K…', '1h'], ['L', 'Liquid Dog', 'LDOG', 'Ab2L…', '2h'], ['O', 'Orbit', 'ORB', 'A63L…', '2h'], ['H', 'Halftone', 'HALF', 'Ab4h…', '3h']]
+$('newest').insertAdjacentHTML('beforeend', NEW.map((c) => `<div class="row"><span class="ic">${c[0]}</span><span>${c[1]}<br><small style="color:var(--lt3)">$${c[2]} · ${c[3]}<span class="sfx">root</span></small></span><span class="r">${c[4]} ago</span></div>`).join(''))
+
+
+}
+if (part !== 'app') { $('fname').textContent = 'Root Cat'; $('fsym').textContent = 'RCAT'; if (part === 'sheet2') { $('go').textContent = 'Launched · CA …root'; $('go').style.background = '#0a8f73'; $('go').style.color = '#fff' } }
+</script></body></html>

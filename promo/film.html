@@ -1,0 +1,307 @@
+<!doctype html>
+<!-- HyperRoot launch film (35 s, 1080p), pump.fun-video structure in HyperRoot's palette: a white field with a mint glow
+     rising from the floor, short centred lines that blur in word by word, and real 3D (three.js r165) for the $ROOT coin,
+     its roots, the orbiting platform icons, the coin network and the coin rain. Frame-accurate: window.renderFrame(t).
+     0 lines · 5.4 hero: the coin, roots, icons orbiting · 10 the network · 15 the 90 / 10 split · 21 the rain ·
+     24.4 the counter · 27.8 the dashboard card tilts in (example data) · 31.6 black end cards. -->
+<html><head><meta charset="utf-8"><title>HyperRoot film</title>
+<style>
+  @font-face { font-family: Geist; src: url(assets/Geist-500.woff2); font-weight: 100 900; }
+  @font-face { font-family: 'Geist Mono'; src: url(assets/GeistMono-500.woff2); font-weight: 100 900; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #fbfbf9; color: #0b1c19; font-family: Geist, sans-serif; }
+  .ov { position: absolute; pointer-events: none; }
+  #floor { left: -10%; right: -10%; bottom: 0; height: 520px; background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(120, 232, 204, .78), rgba(151, 252, 228, .42) 38%, rgba(151, 252, 228, 0) 72%), linear-gradient(to top, rgba(151, 252, 228, .55), rgba(151, 252, 228, 0) 60%); }
+  #rings { left: 50%; top: 50%; width: 1500px; height: 1500px; margin: -750px 0 0 -750px; border-radius: 50%;
+    background: radial-gradient(circle, #f1fcf8 0 20%, #c9f5e8 20.4% 31%, #eefbf6 31.4% 42%, #b4f0df 42.4% 55%, #e4f9f2 55.4% 66%, rgba(196, 245, 230, .55) 66.4% 70%, rgba(196, 245, 230, 0) 70.4%); }
+  #gl { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  .t { font: 600 66px/1.12 Geist; letter-spacing: -.028em; color: #0b1c19; text-align: center; left: 0; right: 0; }
+  .m { color: #0b9e82; }
+  .w { display: inline-block; will-change: transform, opacity, filter; }
+  .sub { font: 500 34px/1.4 Geist; letter-spacing: -.01em; color: #3d4a46; text-align: center; left: 0; right: 0; }
+  #wm { font: 650 112px/1 Geist; letter-spacing: -.04em; }
+  #wms { font: 500 26px 'Geist Mono'; letter-spacing: .14em; text-transform: uppercase; color: #3d4a46; }
+  /* the split */
+  #bar { left: 340px; top: 470px; width: 1240px; height: 112px; }
+  .seg { position: absolute; top: 0; height: 112px; background: #0f6b5a; box-shadow: 0 18px 40px rgba(15, 80, 66, .18), 0 2px 6px rgba(15, 80, 66, .12); overflow: hidden; }
+  #s90 { left: 0; border-radius: 24px 10px 10px 24px; }
+  #s10 { border-radius: 10px 24px 24px 10px; }
+  .lab { position: absolute; left: 44px; top: 0; height: 112px; display: flex; align-items: center; gap: 26px; white-space: nowrap; color: #fff; }
+  .lab b { font: 650 58px Geist; letter-spacing: -.03em; } .lab span { font: 500 32px Geist; color: rgba(255, 255, 255, .86); }
+  #call { right: 340px; top: 336px; text-align: right; white-space: nowrap; }
+  #call b { font: 650 58px Geist; letter-spacing: -.03em; color: #0b9e82; } #call span { font: 500 32px Geist; color: #0b1c19; margin-left: 16px; }
+  #lead { right: 400px; top: 412px; width: 2px; height: 52px; background: #0b9e82; }
+  #drip { left: 0; top: 0; width: 1920px; height: 1080px; }
+  #burn { left: 1430px; top: 860px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(11, 158, 130, .55), rgba(47, 211, 173, .28) 40%, rgba(151, 252, 228, 0) 70%); }
+  /* the counter */
+  #num { font: 650 176px/1 Geist; letter-spacing: -.045em; font-variant-numeric: tabular-nums; text-align: center; left: 0; right: 0; top: 330px; }
+  /* the card */
+  #stage { left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1700px; perspective-origin: 50% 30%; }
+  #card { position: absolute; left: 360px; top: 270px; width: 1200px; height: 690px; zoom: 1; border-radius: 26px; background: #0d1715; color: #e9f1ee; padding: 30px 34px; transform-origin: 50% 100%;
+    box-shadow: 0 50px 90px rgba(10, 40, 34, .28), 0 8px 20px rgba(10, 40, 34, .18), inset 0 0 0 1px rgba(255, 255, 255, .06); font-family: Geist; }
+  #card .hd { display: flex; align-items: center; gap: 14px; font: 600 30px Geist; }
+  #card .dot { width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #97fce4, #0b9e82); }
+  #card .tabs { margin-left: auto; display: flex; gap: 8px; font: 500 17px 'Geist Mono'; color: #7d8a86; }
+  #card .tabs i { font-style: normal; padding: 6px 12px; border-radius: 8px; } #card .tabs i.on { background: #1c2b28; color: #e9f1ee; }
+  #card .sub2 { font: 500 17px 'Geist Mono'; color: #6f7c78; margin: 8px 0 20px 44px; letter-spacing: .04em; }
+  .row { display: flex; align-items: center; gap: 22px; height: 92px; padding: 0 18px; border-radius: 14px; margin-bottom: 8px; background: #121e1c; border: 1px solid transparent; }
+  .row .n { width: 22px; font: 500 20px 'Geist Mono'; color: #6f7c78; }
+  .row .hd2 { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font: 650 22px Geist; color: #0d1715; }
+  .row .nm { width: 300px; font: 600 27px Geist; } .row .nm small { display: block; font: 500 16px 'Geist Mono'; color: #6f7c78; margin-top: 3px; }
+  .row .ca { font: 500 23px 'Geist Mono'; color: #a9b6b2; width: 270px; } .row .ca em { font-style: normal; color: #0d1715; background: #6ff0d0; border-radius: 6px; padding: 1px 6px; margin-left: 2px; }
+  .row .bar2 { flex: 1; height: 6px; border-radius: 3px; background: #1d2b28; overflow: hidden; } .row .bar2 i { display: block; height: 100%; background: #2fd3ad; border-radius: 3px; }
+  .row .mc { width: 140px; text-align: right; font: 600 26px Geist; color: #6ff0d0; } .row .mc small { display: block; font: 500 14px 'Geist Mono'; color: #6f7c78; }
+  .row.you { background: #10302a; }
+  .pill { font: 600 14px 'Geist Mono'; color: #0d1715; background: #6ff0d0; border-radius: 6px; padding: 2px 8px; margin-left: 8px; vertical-align: 3px; }
+  .exd { position: absolute; right: 26px; bottom: 20px; font: 500 14px 'Geist Mono'; letter-spacing: .12em; text-transform: uppercase; color: #7d8a86; border: 1px solid #26332f; border-radius: 7px; padding: 5px 9px; }
+  /* the end */
+  #black { inset: 0; background: #000; }
+  .tw { font: 500 72px Geist; letter-spacing: -.025em; color: #fff; text-align: center; left: 0; right: 0; top: 488px; }
+  #fine { left: 0; right: 0; bottom: 56px; text-align: center; font: 500 22px Geist; color: #8b928f; }
+  .plate { background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(251,251,249,.94), rgba(251,251,249,.8) 45%, rgba(251,251,249,0) 100%); }
+  #flash { inset: 0; background: radial-gradient(circle, #fff, #fbfbf9 50%, #e6faf3 100%); }
+  #grain { position: absolute; left: -64px; top: -64px; width: 2048px; height: 1208px; pointer-events: none; opacity: .05; mix-blend-mode: soft-light; }
+</style>
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/" } }</script>
+</head><body>
+<script>window.READY = false; window.DURATION = 35</script>
+<div class="ov" id="floor"></div>
+<div class="ov" id="rings"></div>
+<canvas id="gl" width="1920" height="1080"></canvas>
+
+<div class="ov t" id="t1" style="top:470px">Launching a coin on pump.fun?</div>
+<div class="ov t" id="t2" style="top:470px">Give it <span class="m">roots.</span></div>
+<div class="ov t" id="t3" style="top:478px;font-weight:500;font-size:58px">introducing</div>
+<div class="ov plate" id="pl1" style="left:410px;top:800px;width:1100px;height:280px"></div>
+<div class="ov plate" id="pl2" style="left:280px;top:440px;width:640px;height:220px"></div><div class="ov plate" id="pl2b" style="left:1030px;top:440px;width:720px;height:220px"></div>
+<div class="ov plate" id="pl3" style="left:460px;top:640px;width:1000px;height:150px"></div>
+<div class="ov t" id="wm" style="top:862px">Hyper<span class="m">Root</span></div>
+<div class="ov sub" id="wms" style="top:990px">every coin paired with $ROOT</div>
+<div class="ov t" id="n1" style="left:0;right:auto;width:830px;text-align:right;top:500px">Every coin</div>
+<div class="ov t" id="n2" style="left:1090px;right:auto;text-align:left;top:500px">is rooted in <span class="m">$ROOT.</span></div>
+<div class="ov sub" id="n3" style="top:680px">Buying any coin here buys <span class="m">$ROOT</span> first.</div>
+<div class="ov t" id="h4" style="top:250px">Every trade pays a <span class="m">creator fee.</span></div>
+<div class="ov" id="bar"><div class="seg" id="s90"><div class="lab" id="lpre"><b>Creator fee</b><span>0.5 to 3 % of every trade</span></div><div class="lab" id="lpost"><b>90 %</b><span>to the creator, automatically</span></div></div><div class="seg" id="s10"></div></div>
+<div class="ov" id="lead"></div>
+<div class="ov" id="call"><b>10 %</b><span>burns $ROOT</span></div>
+<svg class="ov" id="drip" viewBox="0 0 1920 1080"><defs><filter id="bl"><feGaussianBlur stdDeviation="7"/></filter></defs>
+  <path id="dpg" d="M1532 590 C 1540 660, 1500 700, 1512 760 S 1560 840, 1530 930" fill="none" stroke="#2fd3ad" stroke-width="16" stroke-linecap="round" opacity=".45" filter="url(#bl)"/>
+  <path id="dp" d="M1532 590 C 1540 660, 1500 700, 1512 760 S 1560 840, 1530 930" fill="none" stroke="#0b9e82" stroke-width="6" stroke-linecap="round"/>
+  <g id="sparks"></g></svg>
+<div class="ov" id="burn"></div>
+<div class="ov sub" id="h4b" style="top:650px">Split on chain by pump.fun's own fee sharing, in the launch transaction.</div>
+<div class="ov t" id="r1" style="top:440px">Every trade <span class="m">pays you.</span></div>
+<div class="ov t" id="r2" style="top:520px">And burns a little <span class="m">$ROOT.</span></div>
+<div class="ov" id="num">≈ 0.0000 <span class="m">SOL</span></div>
+<div class="ov t" id="c1" style="top:540px;font-weight:500;font-size:50px">to launch a coin.</div>
+<div class="ov t" id="c2" style="top:610px;font-weight:500;font-size:50px">No platform fee. No dev buy.</div>
+<div class="ov t" id="k1" style="top:150px">Every CA ends in <span class="m">root.</span></div>
+<div class="ov" id="stage"><div id="card">
+  <div class="hd"><div class="dot"></div>HyperRoot<div class="tabs"><i class="on">Newest</i><i>Top</i><i>Graduated</i></div></div>
+  <div class="sub2">every coin paired with $ROOT</div>
+  <div id="rows"></div><div class="exd">example data</div></div></div>
+<div class="ov" id="black"></div>
+<div class="ov tw" id="e1">Launch on Hyper<span style="color:#6ff0d0">Root</span></div>
+<div class="ov tw" id="e2"><span style="color:#6ff0d0">$ROOT</span></div>
+<div class="ov" id="fine">Independent. Not affiliated with, sponsored or endorsed by pump.fun or Hyperliquid.</div>
+<div class="ov" id="flash"></div>
+<canvas id="grain" width="1048" height="604"></canvas>
+
+<script type="module">
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+
+// ---------------------------------------------------------------- helpers
+const $ = (id) => document.getElementById(id), V = (x, y, z) => new THREE.Vector3(x, y, z)
+const clamp = (x) => Math.max(0, Math.min(1, x)), seg = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, k) => a + (b - a) * k
+const eio = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2), eout = (x) => 1 - Math.pow(1 - x, 3)
+const expo = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x))
+const eBack = (x) => { const c1 = 1.6, c3 = c1 + 1; return x <= 0 ? 0 : 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2) }
+function mulberry(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296 } }
+const show = (el, o) => { el.style.opacity = o; el.style.visibility = o > .002 ? 'visible' : 'hidden' }
+
+// words: rise, unblur, staggered; exit = blur out + scale up. dim(): the line greys back when the next one arrives
+function split(el) { const walk = (n) => { for (const c of [...n.childNodes]) { if (c.nodeType === 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((p) => { if (!p) return; if (/^\s+$/.test(p)) f.appendChild(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = p; f.appendChild(s) } }); c.replaceWith(f) } else walk(c) } }; walk(el) }
+function words(el, t, t0, t1, step = .12, dur = .5) {
+  const out = t1 == null ? 0 : seg(t, t1, t1 + .4)
+  el.querySelectorAll('.w').forEach((w, i) => { const p = eout(seg(t, t0 + i * step, t0 + i * step + dur)) * (1 - out)
+    w.style.opacity = p; w.style.transform = `translateY(${(1 - p) * 16 * (out ? 0 : 1)}px) scale(${1 + out * .12})`; w.style.filter = `blur(${out ? out * 10 : (1 - p) * 12}px)` })
+  el.style.visibility = t > t0 - .1 && (t1 == null || t < t1 + .45) ? 'visible' : 'hidden'
+}
+const dim = (el, t, t0) => { el.style.opacity = 1 - .62 * eio(seg(t, t0, t0 + .45)) }
+const lift = (el, t, t0, px) => { el.style.translate = `0 ${-px * eio(seg(t, t0, t0 + .5))}px` }
+for (const id of ['t1', 't2', 't3', 'wm', 'wms', 'n1', 'n2', 'n3', 'h4', 'h4b', 'r1', 'r2', 'c1', 'c2', 'k1', 'e1', 'e2']) split($(id))
+await document.fonts.load('600 80px Geist'); await document.fonts.load('500 30px "Geist Mono"')
+const canvasTex = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t }
+const img = (u) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.src = u })
+
+// ---------------------------------------------------------------- renderer: transparent over the paper field, studio light, soft shadows
+const renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, alpha: true, preserveDrawingBuffer: true })
+renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false); renderer.setClearColor(0x000000, 0)
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.VSMShadowMap
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(30, 1920 / 1080, .05, 200)
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture
+const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(-5, 7, 11); key.castShadow = true; key.shadow.mapSize.set(2048, 2048)
+Object.assign(key.shadow.camera, { left: -11, right: 11, top: 8, bottom: -8, near: 1, far: 40 }); key.shadow.bias = -.0004; key.shadow.normalBias = .02; key.shadow.radius = 14; key.shadow.blurSamples = 24; scene.add(key)
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd8efe7, 1.2)); scene.add(new THREE.AmbientLight(0xffffff, .3))
+const rim = new THREE.DirectionalLight(0xe6fff8, .9); rim.position.set(6, -3, -4); scene.add(rim)
+const floorShadow = new THREE.Mesh(new THREE.PlaneGeometry(60, 40), new THREE.ShadowMaterial({ opacity: .09 })); floorShadow.position.z = -1.3; floorShadow.receiveShadow = true; scene.add(floorShadow)
+
+// ---------------------------------------------------------------- roots: deep mint -> teal by depth, a soft fresnel halo that reads on paper
+const DEPTHCOL = ['#0b9e82', '#0c8c74', '#0e7b67', '#0f6b5a']
+const rootMat = (col = DEPTHCOL[0]) => new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: .2, roughness: .36, metalness: .08 })
+const HALO = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { c: { value: new THREE.Color('#2fd3ad') }, o: { value: .34 } },
+  vertexShader: 'varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }',
+  fragmentShader: 'uniform vec3 c; uniform float o; varying vec3 vN; varying vec3 vV; void main(){ float f = abs(dot(normalize(vN), normalize(vV))); gl_FragColor = vec4(c, o * f * f * f); }' })
+function growPts(rand, start, dir, len, depth, out, opts) {
+  const pts = [start.clone()], step = .14, n = Math.round(len / step); let p = start.clone(), d = dir.clone()
+  for (let i = 0; i < n; i++) {
+    d.add(V((rand() - .5) * .34, (rand() - .5) * .34, (rand() - .5) * .05)); d.z *= .6; d.normalize()
+    p = p.clone().addScaledVector(d, step); pts.push(p)
+    if (depth < 3 && i > 3 && rand() < .07 + depth * .02) { const side = V(-d.y, d.x, 0).multiplyScalar(rand() < .5 ? -1 : 1); growPts(rand, p.clone(), d.clone().addScaledVector(side, .5 + rand() * .45).normalize(), len * (.4 + rand() * .25), depth + 1, out, opts) }
+    if (p.length() > (opts.max || 99)) break
+  }
+  out.push({ pts, depth, delay: Math.min(.6, out.length ? rand() * .2 + depth * .12 : 0) })
+}
+const _v = V(0, 0, 0)
+function tube(pts, radius, taper = .82) {
+  const curve = new THREE.CatmullRomCurve3(pts), sg = Math.max(6, pts.length * 2), rad = 7
+  const g = new THREE.TubeGeometry(curve, sg, radius, rad, false), pos = g.attributes.position
+  for (let i = 0; i <= sg; i++) { const u = i / sg, c = curve.getPointAt(u), s = 1 - taper * u; for (let k = 0; k <= rad; k++) { const ix = i * (rad + 1) + k; _v.fromBufferAttribute(pos, ix).sub(c).multiplyScalar(s).add(c); pos.setXYZ(ix, _v.x, _v.y, _v.z) } }
+  g.computeVertexNormals(); return g
+}
+function growable(pts, w, mat, taper) { const m = new THREE.Mesh(tube(pts, w, taper), mat), h = new THREE.Mesh(tube(pts, w * 2.8, taper), HALO)
+  return { m, h, n: m.geometry.index.count, nh: h.geometry.index.count, set(q) { m.geometry.setDrawRange(0, Math.floor(this.n * q / 6) * 6); h.geometry.setDrawRange(0, Math.floor(this.nh * q / 6) * 6); m.visible = h.visible = q > 0 } } }
+function rootSystem(seed, count, len, opts = {}) {
+  const rand = mulberry(seed), list = [], group = new THREE.Group(), mats = DEPTHCOL.map((c) => rootMat(c))
+  for (let k = 0; k < count; k++) { const a = (k / count) * Math.PI * 2 + (rand() - .5) * .4, dir = V(Math.cos(a), Math.sin(a), 0)
+    growPts(rand, dir.clone().multiplyScalar(opts.r0 || 0), dir, len * (.8 + rand() * .4), 0, list, opts) }
+  const tubes = list.map((r) => { const g = growable(r.pts, (opts.w || .07) * Math.pow(.62, r.depth), mats[Math.min(3, r.depth)]); group.add(g.m, g.h); g.delay = r.delay; return g })
+  return { group, grow(p) { for (const o of tubes) o.set(expo(clamp((p - o.delay) / (1 - o.delay + 1e-6)))) } }
+}
+
+// ---------------------------------------------------------------- the coin (the real GLB), its roots, the orbiting icons
+const gltf = await new GLTFLoader().loadAsync('assets/root_coin.glb')
+function coinFrom(src) { const inner = src.clone(true), box = new THREE.Box3().setFromObject(inner), size = box.getSize(V(0, 0, 0)), c = box.getCenter(V(0, 0, 0))
+  inner.position.sub(c); const thin = size.x < size.y && size.x < size.z ? 'x' : size.y < size.z ? 'y' : 'z'
+  const holder = new THREE.Group(); holder.add(inner); if (thin === 'y') holder.rotation.x = Math.PI / 2; if (thin === 'x') holder.rotation.y = -Math.PI / 2
+  const pivot = new THREE.Group(); pivot.add(holder); pivot.scale.setScalar(2.6 / Math.max(size.x, size.y, size.z)); pivot.userData.s = pivot.scale.x
+  pivot.traverse((o) => { if (o.isMesh) o.castShadow = true }); return pivot }
+const coin = coinFrom(gltf.scene); scene.add(coin)
+const RH = rootSystem(7, 10, 6.4, { r0: 1.15, w: .05, max: 8 }); RH.group.position.z = -.35; scene.add(RH.group)
+
+const X_LOGO = canvasTex(512, 512, (c) => { c.fillStyle = '#000'; c.fillRect(0, 0, 512, 512); c.strokeStyle = '#fff'; c.lineCap = 'butt'
+  c.lineWidth = 40; c.beginPath(); c.moveTo(150, 130); c.lineTo(362, 382); c.stroke(); c.lineWidth = 16; c.beginPath(); c.moveTo(362, 130); c.lineTo(150, 382); c.stroke()
+  c.fillStyle = '#000'; c.fillRect(0, 0, 0, 0) })
+async function iconDisc(src) {
+  const face = src.isTexture ? src : canvasTex(512, 512, (c) => { c.fillStyle = '#fff'; c.fillRect(0, 0, 512, 512); c.save(); c.beginPath(); c.arc(256, 256, 236, 0, Math.PI * 2); c.clip(); c.drawImage(src, 20, 20, 472, 472); c.restore() })
+  const g = new THREE.Group(), body = new THREE.Mesh(new THREE.CylinderGeometry(.56, .56, .16, 64), [new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .25, clearcoat: 1 }), new THREE.MeshStandardMaterial({ map: face, roughness: .35 }), new THREE.MeshStandardMaterial({ color: '#ffffff' })])
+  body.rotation.set(Math.PI / 2, Math.PI / 2, 0); g.add(body)
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(.565, .03, 12, 96), new THREE.MeshStandardMaterial({ color: '#e9f6f2', roughness: .3, metalness: .2 })); g.add(ring); scene.add(g); return g }
+const icons = [await iconDisc(await img('assets/pumpfun.png')), await iconDisc(await img('assets/hyperliquid.png')), await iconDisc(await img('assets/axiom.png')), await iconDisc(await img('assets/gmgn.png')), await iconDisc(X_LOGO)]
+
+// ---------------------------------------------------------------- the network: example coins (letters on pastel heads) rooted to the centre coin
+const NODES = [[-5.7, 2.5, -.4, 'R', '#cfeee6'], [-3.3, 3.25, .3, 'M', '#f3e7cf'], [-.9, 3.45, -.6, 'L', '#dfe9f6'], [1.7, 3.2, .2, 'O', '#f2dcdc'], [4.0, 3.0, -.5, 'H', '#e2f2d3'], [6.1, 2.0, .3, 'P', '#efe2f4'],
+  [-6.3, -.3, .2, 'K', '#f6efcf'], [6.4, .25, -.3, 'S', '#d6f0ec'], [-5.0, -2.6, .4, 'F', '#e6e1f4'], [-2.5, -3.3, -.3, 'B', '#d9efdd'], [.1, -3.15, .5, 'T', '#f4e1d6'], [2.6, -3.35, -.4, 'G', '#dbe8f3'], [4.9, -2.55, .3, 'D', '#f1e9d2']]
+const net = new THREE.Group(); scene.add(net)
+const nodes = NODES.map(([x, y, z, L, bg], i) => {
+  const face = canvasTex(256, 256, (c) => { c.fillStyle = bg; c.fillRect(0, 0, 256, 256); c.fillStyle = '#0b1c19'; c.font = '600 120px Geist'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(L, 128, 136) })
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(.38, .38, .12, 48), [new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: .3, clearcoat: 1 }), new THREE.MeshStandardMaterial({ map: face, roughness: .4 }), new THREE.MeshStandardMaterial({ color: '#fff' })])
+  m.rotation.set(Math.PI / 2, Math.PI / 2, 0); const g = new THREE.Group(); g.add(m); g.position.set(x, y, z); net.add(g)
+  const end = V(x, y, z), dir = end.clone().normalize(), rr = mulberry(31 + i), a = dir.clone().multiplyScalar(.75), b = end.clone().addScaledVector(dir, -.45)
+  const perp = V(-dir.y, dir.x, 0), pts = [a]; for (let k = 1; k < 4; k++) pts.push(a.clone().lerp(b, k / 4).addScaledVector(perp, (rr() - .5) * .7).add(V(0, 0, (rr() - .5) * .3))); pts.push(b)
+  const root = growable(pts, .045, rootMat(DEPTHCOL[i % 2]), .45); net.add(root.m, root.h)
+  return { g, root, d: end.length() } })
+
+// ---------------------------------------------------------------- the rain: $ROOT coins burst up from the floor glow and fall
+const RAIN = Array.from({ length: 34 }, (_, i) => { const r = mulberry(500 + i), c = coinFrom(gltf.scene); c.userData.s *= .3 + r() * .22; scene.add(c)
+  return { c, t0: 21.0 + r() * 2.4, x: (r() - .5) * 13, z: (r() - .5) * 4 - 1, vx: (r() - .5) * 3.2, vy: 7.5 + r() * 3.2, sx: (r() - .5) * 7, sy: (r() - .5) * 9 } })
+
+// ---------------------------------------------------------------- the card rows (example data, masked)
+const ROWS = [['R', '#cfeee6', 'Root Cat', '$RCAT', 'A6R…', '2m', '$14.8K', .62], ['M', '#f3e7cf', 'Mint Frog', '$MFROG', 'A11K…', '4m', '$9.3K', .44], ['Y', '#6ff0d0', 'Your coin', '$YOURS', 'Hp5x…', 'now', '$4.1K', .2, true], ['L', '#dfe9f6', 'Liquid Dog', '$LDOG', 'Ab2L…', '7m', '$3.9K', .18], ['O', '#f2dcdc', 'Orbit', '$ORB', 'A63L…', '9m', '$2.6K', .12]]
+$('rows').innerHTML = ROWS.map(([L, bg, nm, tk, ca, age, mc, v, you], i) => `<div class="row${you ? ' you' : ''}" id="row${i}"><div class="n">${i + 1}</div><div class="hd2" style="background:${bg}">${L}</div><div class="nm">${nm}${you ? '<span class="pill">LAUNCHED</span>' : ''}<small>${tk} · ${age}</small></div><div class="ca">${ca}<em>root</em></div><div class="bar2"><i style="width:${v * 100}%"></i></div><div class="mc">${mc}<small>mc</small></div></div>`).join('')
+
+// ---------------------------------------------------------------- grain + drip sparks
+const gctx = $('grain').getContext('2d'), gi = gctx.createImageData(1048, 604), gr = mulberry(5)
+for (let i = 0; i < gi.data.length; i += 4) { const v = gr() * 255; gi.data[i] = gi.data[i + 1] = gi.data[i + 2] = v; gi.data[i + 3] = 255 } gctx.putImageData(gi, 0, 0)
+const SPK = Array.from({ length: 22 }, (_, i) => { const r = mulberry(900 + i), e = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); e.setAttribute('r', 3 + r() * 4); e.setAttribute('fill', i % 3 ? '#2fd3ad' : '#0b9e82'); $('sparks').appendChild(e); return { e, a: (r() - .5) * 2.4, s: 80 + r() * 150, d: r() * .5 } })
+const dp = $('dp'), dpg = $('dpg'), DL = dp.getTotalLength(); dp.style.strokeDasharray = dpg.style.strokeDasharray = DL
+
+// ---------------------------------------------------------------- every frame
+window.renderFrame = (t) => {
+  $('grain').style.transform = `translate(${-((t * 997) % 64)}px, ${-((t * 613) % 64)}px)`
+  let blur = 0
+  // ---- lines (0 - 5.4)
+  words($('t1'), t, .25, 2.05); words($('t2'), t, 2.45, 4.2, .16); words($('t3'), t, 4.55, 5.25)
+  // ---- hero (5.4 - 10.0): rings, the coin, roots, icons orbiting, the wordmark; push into the coin
+  const hero = t >= 5.35 && t < 10.05, push = eio(seg(t, 9.35, 10.0))
+  { const r = eBack(seg(t, 5.4, 6.3)); $('rings').style.transform = `scale(${(.25 + .75 * r) * (1 + push * 3.2)})`; show($('rings'), hero ? seg(t, 5.4, 5.6) * (1 - seg(t, 9.6, 10.0)) : 0) }
+  coin.visible = hero || (t >= 10.0 && t < 15.0); RH.group.visible = hero; floorShadow.visible = t < 15.0
+  if (hero) {
+    const c = eBack(seg(t, 5.5, 6.6)); coin.position.set(0, .35, 0); coin.scale.setScalar(coin.userData.s * (.001 + c))
+    coin.rotation.set(.12 * Math.sin(t * .9), (1 - eout(seg(t, 5.5, 7.0))) * Math.PI * 2.4 + Math.sin(t * .7) * .16, 0)
+    RH.group.position.set(0, .35, -.35); RH.grow(seg(t, 5.9, 7.9))
+    camera.position.set(Math.sin(t * .35) * .35, .35 + Math.cos(t * .3) * .2, lerp(15, 1.6, push)); camera.lookAt(0, .35, 0)
+    icons.forEach((ic, i) => { const p = eBack(seg(t, 6.4 + i * .16, 7.1 + i * .16)), a = i / 5 * Math.PI * 2 + t * .42 + .5
+      ic.visible = true; ic.position.set(Math.cos(a) * 4.7, .55 + Math.sin(a) * 1.75, Math.sin(a) * -1.2); ic.scale.setScalar(.001 + p * (1 - push)); ic.rotation.set(Math.sin(t + i) * .18, Math.cos(a) * -.35, 0) })
+  } else icons.forEach((ic) => { ic.visible = false })
+  show($('pl1'), seg(t, 7.0, 7.5) * (1 - seg(t, 9.2, 9.6))); show($('pl2'), seg(t, 10.5, 10.9) * (1 - seg(t, 12.6, 13.0))); show($('pl2b'), seg(t, 10.8, 11.2) * (1 - seg(t, 12.6, 13.0))); show($('pl3'), seg(t, 12.7, 13.1) * (1 - seg(t, 14.6, 15.0)))
+  words($('wm'), t, 7.2, 9.3, .2, .6); words($('wms'), t, 7.75, 9.3, .07, .45)
+  show($('flash'), Math.max(0, 1 - Math.abs(t - 10.0) / .32))
+  // ---- the network (10.0 - 15.0)
+  const inN = t >= 10.0 && t < 15.0; net.visible = inN
+  if (inN) {
+    const k = seg(t, 10.0, 15.0); coin.position.set(0, 0, 0); coin.scale.setScalar(coin.userData.s * .5 * eBack(seg(t, 10.0, 10.6))); coin.rotation.set(0, Math.sin(t * .8) * .3, 0)
+    camera.position.set(lerp(-.5, .5, k), lerp(.3, -.2, k), lerp(15.5, 17.2, eio(k))); camera.lookAt(0, 0, 0)
+    nodes.forEach((n, i) => { const t0 = 10.25 + n.d * .14; n.root.set(eio(seg(t, t0, t0 + .9))); const p = eBack(seg(t, t0 + .7, t0 + 1.2)); n.g.scale.setScalar(.001 + p); n.g.rotation.z = Math.sin(t * .6 + i) * .08
+      n.g.position.y = NODES[i][1] + Math.sin(t * .9 + i * 1.7) * .06 })
+    blur = seg(t, 14.6, 15.0) * 10
+  }
+  words($('n1'), t, 10.7, 12.6, .14); words($('n2'), t, 11.0, 12.6, .14); words($('n3'), t, 12.9, 14.6, .07, .45)
+  // ---- the split (15.0 - 21.0)
+  words($('h4'), t, 15.05, 20.6, .12); dim($('h4'), t, 19.2); lift($('h4'), t, 0, 0)
+  { const fill = eio(seg(t, 15.55, 16.45)), sp = eio(seg(t, 16.8, 17.3)), drop = seg(t, 19.05, 19.9), out = seg(t, 20.6, 21.0)
+    const on = t >= 15.45 && t < 21.0; show($('bar'), on ? 1 - out : 0); $('bar').style.filter = `blur(${out * 10}px)`
+    const W = 1240, w90 = W * .9 * Math.min(1, fill / .9), w10 = W * .1 * seg(fill, .9, 1)
+    $('s90').style.width = w90 + 'px'; $('s10').style.left = (W * .9 + 14 * sp) + 'px'; $('s10').style.width = w10 + 'px'
+    $('s90').style.borderRadius = `24px ${lerp(24 * seg(fill, .85, .9) * (1 - seg(fill, .9, .95)), 10, sp)}px ${lerp(24 * seg(fill, .85, .9) * (1 - seg(fill, .9, .95)), 10, sp)}px 24px`
+    $('s10').style.background = `rgb(${lerp(15, 47, sp)},${lerp(107, 211, sp)},${lerp(90, 173, sp)})`
+    $('lpre').style.opacity = seg(t, 15.9, 16.3) * (1 - seg(t, 16.75, 17.0)); $('lpre').style.translate = `0 ${-12 * seg(t, 16.75, 17.0)}px`
+    $('lpost').style.opacity = seg(t, 16.95, 17.3); $('lpost').style.translate = `0 ${12 * (1 - eout(seg(t, 16.95, 17.35)))}px`
+    const ca = eout(seg(t, 17.15, 17.6)) * (1 - seg(t, 19.0, 19.4)); show($('call'), on ? ca : 0); show($('lead'), on ? ca : 0); $('call').style.translate = `0 ${(1 - ca) * 10}px`
+    // the 10 % piece drops down a root into the floor glow and burns
+    const dl = eio(seg(t, 18.9, 19.55)); dp.style.strokeDashoffset = dpg.style.strokeDashoffset = DL * (1 - dl); show($('drip'), on ? Math.min(1, dl * 4) * (1 - out) : 0)
+    if (drop > 0) { const q = dp.getPointAtLength(DL * eio(drop)), s = $('s10'); s.style.transform = `translate(${q.x - 1532}px, ${q.y - 590}px) rotate(${eio(drop) * 70}deg) scale(${1 - eio(drop) * .75})`; s.style.opacity = 1 - seg(drop, .85, 1) } else { $('s10').style.transform = ''; $('s10').style.opacity = 1 }
+    const b = seg(t, 19.85, 20.7); show($('burn'), on && b > 0 ? Math.sin(b * Math.PI) : 0); $('burn').style.transform = `scale(${.3 + eout(b) * 1.6})`
+    SPK.forEach((p) => { const l = clamp((t - 19.9 - p.d * .3) / .9); p.e.setAttribute('cx', 1530 + Math.sin(p.a) * p.s * eout(l)); p.e.setAttribute('cy', 930 - Math.cos(p.a) * p.s * eout(l) * .9 - 40 * l); p.e.setAttribute('opacity', l > 0 && l < 1 ? (1 - l) * .9 : 0) })
+  }
+  words($('h4b'), t, 19.35, 20.6, .05, .45)
+  // ---- the rain (21.0 - 24.4)
+  const inR = t >= 20.9 && t < 24.6
+  RAIN.forEach((r) => { const tt = t - r.t0, on = inR && tt > 0 && tt < 3.2; r.c.visible = on; if (!on) return
+    r.c.position.set(r.x + r.vx * tt, -5.2 + r.vy * tt - 4.9 * tt * tt, r.z); r.c.rotation.set(r.sx * tt, r.sy * tt, r.sx * .3 * tt); r.c.scale.setScalar(r.c.userData.s * eout(clamp(tt * 4))) })
+  if (inR) { camera.position.set(0, 0, 18); camera.lookAt(0, 0, 0); blur = seg(t, 24.2, 24.6) * 10 }
+  words($('r1'), t, 21.1, 24.05, .14); dim($('r1'), t, 22.55); lift($('r1'), t, 22.55, 42); words($('r2'), t, 22.65, 24.05, .14)
+  // ---- the counter (24.4 - 27.8)
+  { const v = .0073 * eout(seg(t, 24.65, 25.9)), a = eout(seg(t, 24.45, 24.9)) * (1 - seg(t, 27.4, 27.8))
+    $('num').innerHTML = `≈ ${v.toFixed(4)} <span class="m">SOL</span>`; show($('num'), t > 24.4 && t < 27.8 ? a : 0); $('num').style.filter = `blur(${(1 - eout(seg(t, 24.45, 24.9))) * 12 + seg(t, 27.4, 27.8) * 10}px)`
+    $('num').style.transform = `scale(${1 + seg(t, 27.4, 27.8) * .1})` }
+  words($('c1'), t, 25.15, 27.4, .12); dim($('c1'), t, 26.05); words($('c2'), t, 26.15, 27.4, .12); lift($('c1'), t, 26.05, 0)
+  // ---- the card (27.8 - 31.6): tilts in from below like a leaderboard card; your row lights up
+  words($('k1'), t, 27.85, 31.15, .14)
+  { const k = eout(seg(t, 28.05, 29.45)), d = seg(t, 28.05, 31.6), out = seg(t, 31.15, 31.55)
+    show($('stage'), t > 28.0 && t < 31.6 ? Math.min(1, seg(t, 28.05, 28.35)) * (1 - out) : 0)
+    $('card').style.transform = `translateY(${(1 - k) * 380 - d * 16}px) rotateX(${lerp(58, 11, k) - d * 3}deg) rotateZ(${(1 - k) * -4 + d * .6}deg) scale(${lerp(.9, 1, k)})`
+    $('stage').style.filter = `blur(${(1 - seg(t, 28.05, 28.6)) * 8 + out * 10}px)`
+    const h = eout(seg(t, 29.55, 30.0)); $('row2').style.borderColor = `rgba(111,240,208,${h * .9})`; $('row2').style.boxShadow = `0 0 ${34 * h}px rgba(47,211,173,${.35 * h})` }
+  // ---- the end (31.6 - 35): black cards
+  show($('black'), t >= 31.6 ? 1 : 0); words($('e1'), t, 31.8, 33.15, .16); words($('e2'), t, 33.4, null, .1, .55); show($('fine'), eout(seg(t, 33.7, 34.2)))
+  // ---- 3D on/off, render
+  const any3d = t >= 5.35 && t < 15.0 || inR
+  $('gl').style.visibility = any3d ? 'visible' : 'hidden'; $('gl').style.filter = blur ? `blur(${blur}px)` : 'none'; $('gl').style.opacity = 1 - blur / 12
+  if (any3d) renderer.render(scene, camera)
+}
+window.renderFrame(0); window.READY = true
+</script>
+</body></html>
