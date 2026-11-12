@@ -1,3 +1,3 @@
 // Where the pad's relay runs right now (the cloudflared tunnel URL). The page only talks to this site; moving the relay
 // means changing this one line.
-export const RELAY_BASE = 'https://operates-creek-thesaurus-temperatures.trycloudflare.com'
+export const RELAY_BASE = 'https://rider-pen-meters-born.trycloudflare.com'
